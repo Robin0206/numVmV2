@@ -35,6 +35,7 @@ void VM::READING::Lexer::fillRawCommands() {
         }
         //add currentCommand to rawCommands
         m_rawCommands.push_back(currentCommand);
+        i--;
     }
 }
 
