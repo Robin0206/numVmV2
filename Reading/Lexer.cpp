@@ -4,8 +4,6 @@
 
 #include "Lexer.h"
 
-
-
 VM::READING::Lexer::Lexer(const std::vector<unsigned char> &rawProgram) {
     this->m_rawProgram = rawProgram;
     this->m_commandInformation = MISC::CommandInformation();

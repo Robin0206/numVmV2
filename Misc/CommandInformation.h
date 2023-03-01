@@ -11,8 +11,8 @@
 
 namespace VM::MISC {
     struct CommandInformation {
-        std::array<std::string, 30> m_names;
-        std::array<std::vector<std::uint8_t>, 30> m_argLengths;
+        std::array<std::string, 32> m_names;
+        std::array<std::vector<std::uint8_t>, 32> m_argLengths;
         CommandInformation();
     };
 } // MISC

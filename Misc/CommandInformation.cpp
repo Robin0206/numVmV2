@@ -71,6 +71,6 @@ namespace VM::MISC {
             m_argLengths[28] = std::vector<std::uint8_t>{4};//FST
             m_argLengths[29] = std::vector<std::uint8_t>{4};//FEN
             m_argLengths[30] = std::vector<std::uint8_t>{4};//ARG
-            m_argLengths[30] = std::vector<std::uint8_t>{};//MAIN
+            m_argLengths[31] = std::vector<std::uint8_t>{};//MAIN
         }
     } // MISC
