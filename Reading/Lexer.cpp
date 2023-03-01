@@ -10,6 +10,7 @@ VM::READING::Lexer::Lexer(const std::vector<unsigned char> &rawProgram) {
     this->m_rawProgram = rawProgram;
     this->m_commandInformation = MISC::CommandInformation();
     this->fillRawCommands();
+    this->fillCommands();
 }
 
 void VM::READING::Lexer::fillRawCommands() {
@@ -39,7 +40,7 @@ void VM::READING::Lexer::fillRawCommands() {
     }
 }
 
-void VM::READING::Lexer::print() {
+void VM::READING::Lexer::printRawCommands() {
     for(auto& rawCommand : m_rawCommands){
         std::cout << "\n";
         for(auto& byte : rawCommand){
@@ -48,12 +49,22 @@ void VM::READING::Lexer::print() {
     }
 }
 
-void VM::READING::Lexer::fillCommands() {
+void VM::READING::Lexer::printCommands() {
+    for(auto& command : m_commands){
+        command.print();
+    }
+}
 
+void VM::READING::Lexer::fillCommands() {
+    for(auto& command : m_rawCommands){
+        m_commands.push_back(Command(command));
+    }
 }
 
 std::vector<VM::READING::Command> &VM::READING::Lexer::getCommands() {
     return m_commands;
 }
+
+
 
 

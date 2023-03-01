@@ -27,7 +27,8 @@ namespace VM::READING{
     public:
         explicit Lexer(const std::vector<BYTE>& rawProgram);
         std::vector<Command>& getCommands();
-        void print();
+        void printCommands();
+        void printRawCommands();
     };
 }
 
