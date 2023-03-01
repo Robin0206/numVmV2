@@ -31,12 +31,14 @@ namespace VM::MISC {
             m_names[21] = "PRINT";
             m_names[22] = "RET";
             m_names[23] = "CALL";
-            m_names[24] = "UPPER";
+            m_names[24] = "PARG";
             m_names[25] = "BRANCH";
             m_names[26] = "LABEL";
             m_names[27] = "REFF";
             m_names[28] = "FST";
             m_names[29] = "FEN";
+            m_names[30] = "ARG";
+            m_names[31] = "MAIN";
 
             m_argLengths[0] = std::vector<std::uint8_t>{};//NOOP
             m_argLengths[1] = std::vector<std::uint8_t>{4,4};//REFA
@@ -62,11 +64,13 @@ namespace VM::MISC {
             m_argLengths[21] = std::vector<std::uint8_t>{4};//PRINT
             m_argLengths[22] = std::vector<std::uint8_t>{4};//RET
             m_argLengths[23] = std::vector<std::uint8_t>{4,4};//CALL
-            m_argLengths[24] = std::vector<std::uint8_t>{4};//UPPER
+            m_argLengths[24] = std::vector<std::uint8_t>{4};//PARG
             m_argLengths[25] = std::vector<std::uint8_t>{4,4};//BRANCH
             m_argLengths[26] = std::vector<std::uint8_t>{4};//LABEL
             m_argLengths[27] = std::vector<std::uint8_t>{4};//REFF
             m_argLengths[28] = std::vector<std::uint8_t>{4};//FST
             m_argLengths[29] = std::vector<std::uint8_t>{4};//FEN
+            m_argLengths[30] = std::vector<std::uint8_t>{4};//ARG
+            m_argLengths[30] = std::vector<std::uint8_t>{};//MAIN
         }
     } // MISC
