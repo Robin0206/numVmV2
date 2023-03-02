@@ -26,6 +26,7 @@ namespace VM::READING{
         explicit Command(const std::vector<BYTE>& input);
         Command(const Command& input);
         void print();
+        Command() = default;
     };
 }
 

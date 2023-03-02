@@ -72,3 +72,5 @@ VM::READING::Command::Command(const VM::READING::Command &input) {
     this->m_args = input.m_args;
     this->m_argReferences = input.m_argReferences;
 }
+
+

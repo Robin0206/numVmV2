@@ -10,9 +10,12 @@
 #include "Stack/Function.h"
 #include "../types/Reference.h"
 #include "../Reading/Command.h"
+#include "DelegateTable/Delegate.h"
 
 namespace VM::MACHINE{
     class Executer {
+    public:
+        std::vector<VM::MACHINE::Stackframe*> m_delegates;
         std::vector<VM::MACHINE::Stackframe> m_stack;
         std::vector<VM::MACHINE::Function> m_functions;
         VM::MACHINE::Stackframe m_main;
@@ -20,7 +23,7 @@ namespace VM::MACHINE{
         VM::TYPES::Reference m_returnRegister;
         void fillFunctions(const std::vector<VM::READING::Command>& rawProgram);
         void setMain(const std::vector<VM::READING::Command>& rawProgram);
-    public:
+
         Executer() = default;
         void init(const std::vector<VM::READING::Command>& rawProgram);
         void run();

@@ -27,16 +27,37 @@ void VM::MACHINE::Executer::fillFunctions(const std::vector<VM::READING::Command
 }
 
 void VM::MACHINE::Executer::setMain(const std::vector<VM::READING::Command> &rawProgram) {
-
+    bool inMain = false;
+    std::vector<VM::READING::Command> commands;
+    for(auto& command : rawProgram){
+        if(command.m_opCode == 0x1E){
+            break;
+        }
+        if(inMain){
+            commands.push_back(command);
+        }
+        if(command.m_opCode == 0x1F){
+            inMain = true;
+        }
+    }
+    Function main = Function();
+    main.init(255,commands,this);
+    m_main = Stackframe();
+    m_main.init(main, this);
 }
 
 void VM::MACHINE::Executer::init(const std::vector<VM::READING::Command> &rawProgram) {
     this->fillFunctions(rawProgram);
     this->setMain(rawProgram);
+    m_stack.push_back(m_main);
 }
 
 void VM::MACHINE::Executer::run() {
-
+    READING::Command currentCommand;
+    while(!m_stack.empty()){
+        currentCommand = m_stack[m_stack.size() - 1].getCurrentCommand();
+        currentCommand.print();
+    }
 }
 
 void VM::MACHINE::Executer::printFunctions() {

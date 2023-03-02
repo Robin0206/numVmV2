@@ -1,6 +1,8 @@
+OUTDATED!!!!
+
 //Memory
-REFA [id][type] = 0x0001
-REFA [id][type][size] = 0x0002
+Implementations [id][type] = 0x0001
+Implementations [id][type][size] = 0x0002
 MOV  [dst] [src] = 0x0003
 SET  [dst] [val] = 0x0004
 ASET [dst] [src] [index] = 0x0005  // Array Set
