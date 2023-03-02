@@ -90,7 +90,7 @@ void VM::READING::Command::fillReferences() {
                 intArr[1] = byteVector[2];
                 intArr[2] = byteVector[1];
                 intArr[3] = byteVector[0];
-                std::memcpy(&intArr, &intValue, 4);
+                std::memcpy(&intValue, &intArr, 4);
                 currentReference = TYPES::Reference(intValue, 0x1, 0x0);
                 break;
             case 8:
@@ -103,7 +103,7 @@ void VM::READING::Command::fillReferences() {
                 longArr[5] = byteVector[2];
                 longArr[6] = byteVector[1];
                 longArr[7] = byteVector[0];
-                std::memcpy(&longArr, &longValue, 8);
+                std::memcpy(&longValue, &longArr, 8);
                 currentReference = TYPES::Reference(longValue, 0x1, 0x0);
                 break;
             default:

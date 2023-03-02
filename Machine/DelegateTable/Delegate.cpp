@@ -282,7 +282,8 @@ void VM::MACHINE::DELEGATES::CALL::run(VM::MACHINE::Stackframe &stackframe) {
 
 void VM::MACHINE::DELEGATES::CALL::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a) {
     std::uint32_t index = 0;
-    memcpy(&index, a.m_content.get(), 4);
+    void* index_ptr = reinterpret_cast<std::uint32_t*>(a.m_content.get());
+    memcpy(&index, index_ptr, 4);
     Stackframe frameToPass = Stackframe();
     frameToPass.init(stackframe.m_executor->m_functions[index],stackframe.m_executor);
     stackframe.m_executor->m_stack.push_back(frameToPass);

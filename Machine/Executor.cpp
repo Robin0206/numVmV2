@@ -56,8 +56,11 @@ void VM::MACHINE::Executor::init(std::vector<VM::READING::Command> &rawProgram) 
 
 void VM::MACHINE::Executor::run() {
     READING::Command currentCommand;
+    std::size_t i, j;
     while(!m_stack.empty()){
         currentCommand = m_stack[m_stack.size() - 1].getCurrentCommand();
+        i = currentCommand.m_opCode;
+        j = m_stack.size() - 1;
         switch(currentCommand.m_argReferences.size()){
             case 0:
                 m_delegates[currentCommand.m_opCode]->run(
