@@ -57,6 +57,9 @@ void VM::MACHINE::Executer::run() {
     READING::Command currentCommand;
     while(!m_stack.empty()){
         currentCommand = m_stack[m_stack.size() - 1].getCurrentCommand();
+        if(m_stack[m_stack.size() - 1].getProgramCounter() == m_stack[m_stack.size() - 1].m_function.m_commands.size()){
+            m_stack.pop_back();
+        }
         currentCommand.print();
     }
 }

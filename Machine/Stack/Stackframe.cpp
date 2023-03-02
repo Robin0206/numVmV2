@@ -11,5 +11,10 @@ void VM::MACHINE::Stackframe::init(VM::MACHINE::Function function, VM::MACHINE::
 }
 
 VM::READING::Command VM::MACHINE::Stackframe::getCurrentCommand() {
-    return m_function.m_commands[m_programCounter];
+    m_programCounter++;
+    return m_function.m_commands[m_programCounter - 1];
+}
+
+std::uint64_t VM::MACHINE::Stackframe::getProgramCounter() {
+    return m_programCounter;
 }

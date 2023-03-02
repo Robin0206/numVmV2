@@ -67,5 +67,5 @@ int main() {
     VM::READING::Lexer lexer = VM::READING::Lexer(testProgram);
     VM::MACHINE::Executer executer = VM::MACHINE::Executer();
     executer.init(lexer.getCommands());
-    executer.printFunctions();
+    executer.run();
 }
