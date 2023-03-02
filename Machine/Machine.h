@@ -6,11 +6,9 @@
 #define NUMVMV2_MACHINE_H
 
 #include <vector>
-#include "Command.h"
 
 namespace VM::MACHINE{
     class Machine {
-        std::vector<VM::MACHINE::Command> commands;
     };
 }
 

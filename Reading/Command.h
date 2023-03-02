@@ -9,6 +9,7 @@
 #include <iostream>
 #include "../Misc/ConstMakr.h"
 #include "../Misc/CommandInformation.h"
+#include "../types/Reference.h"
 #include <cstring>
 
 namespace VM::READING{
@@ -17,15 +18,12 @@ namespace VM::READING{
         BYTE m_opCode;
         std::vector<std::vector<BYTE>> m_args;
         std::vector<BYTE> m_rawCommand;
+        std::vector<VM::TYPES::Reference> m_argReferences;
         void setOpCode();
         void fillArgs();
+        void fillReferences();
     public:
-        explicit Command(const std::vector<BYTE>& input){
-            m_commandInformation = MISC::CommandInformation();
-            this->m_rawCommand = input;
-            this->setOpCode();
-            this->fillArgs();
-        }
+        explicit Command(const std::vector<BYTE>& input);
         void print();
     };
 }

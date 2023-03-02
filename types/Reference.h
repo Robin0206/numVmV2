@@ -13,15 +13,16 @@ namespace VM::TYPES{
         std::uint32_t m_id;
         std::uint64_t m_size;
         void* m_content;
-
-        explicit Reference(bool value, std::uint64_t size);
-        explicit Reference(std::uint8_t value, std::uint64_t size);
-        explicit Reference(std::uint32_t value, std::uint64_t size);
-        explicit Reference(std::uint64_t value, std::uint64_t size);
-        explicit Reference(std::int32_t value, std::uint64_t size);
-        explicit Reference(std::int64_t value, std::uint64_t size);
-        explicit Reference(long double value, std::uint64_t size);
+    public:
+        explicit Reference(bool value, std::uint64_t size, std::uint32_t id);
+        explicit Reference(std::uint8_t value, std::uint64_t size, std::uint32_t id);
+        explicit Reference(std::uint32_t value, std::uint64_t size, std::uint32_t id);
+        explicit Reference(std::uint64_t value, std::uint64_t size, std::uint32_t id);
+        explicit Reference(std::int32_t value, std::uint64_t size, std::uint32_t id);
+        explicit Reference(std::int64_t value, std::uint64_t size, std::uint32_t id);
+        explicit Reference(long double value, std::uint64_t size, std::uint32_t id);
         ~Reference();
+        Reference(Reference& toCopy);
     };
 }
 

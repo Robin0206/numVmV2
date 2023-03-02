@@ -57,3 +57,14 @@ void VM::READING::Command::print() {
     }
     std::cout << "\n";
 }
+
+VM::READING::Command::Command(const std::vector<unsigned char> &input) {
+    m_commandInformation = MISC::CommandInformation();
+    this->m_rawCommand = input;
+    this->setOpCode();
+    this->fillArgs();
+}
+
+void VM::READING::Command::fillReferences() {
+
+}
