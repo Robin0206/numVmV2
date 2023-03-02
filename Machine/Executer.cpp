@@ -3,7 +3,7 @@
 //
 
 #include "Executer.h"
-
+#include "./DelegateTable/Delegate.h"
 void VM::MACHINE::Executer::fillFunctions(std::vector<VM::READING::Command> &rawProgram) {
     std::vector<VM::READING::Command> currentFunction;
     std::uint32_t  currentFunctionId;
@@ -59,6 +59,7 @@ void VM::MACHINE::Executer::run() {
         currentCommand = m_stack[m_stack.size() - 1].getCurrentCommand();
         if(m_stack[m_stack.size() - 1].getProgramCounter() == m_stack[m_stack.size() - 1].m_function.m_commands.size()){
             m_stack.pop_back();
+            m_argRegisters = std::vector<VM::TYPES::Reference>();
         }
         currentCommand.print();
     }
@@ -74,4 +75,45 @@ void VM::MACHINE::Executer::generateReferences(std::vector<READING::Command>& co
     for(auto& command : commands){
         command.fillReferences();
     }
+}
+
+void VM::MACHINE::Executer::fillDelegates() {
+//memory
+    m_delegates[0] = new VM::MACHINE::DELEGATES::NOOP();
+    m_delegates[1] = new VM::MACHINE::DELEGATES::REFA();
+    m_delegates[2] = new VM::MACHINE::DELEGATES::REFA();
+    m_delegates[3] = new VM::MACHINE::DELEGATES::MOV();
+    m_delegates[4] = new VM::MACHINE::DELEGATES::SET();
+    m_delegates[5] = new VM::MACHINE::DELEGATES::ASET();
+    m_delegates[6] = new VM::MACHINE::DELEGATES::AGET();
+    m_delegates[7] = new VM::MACHINE::DELEGATES::CPY();
+    //arithmetic
+    m_delegates[8] = new VM::MACHINE::DELEGATES::ADD();
+    m_delegates[9] = new VM::MACHINE::DELEGATES::SUB();
+    m_delegates[10] = new VM::MACHINE::DELEGATES::MUL();
+    m_delegates[11] = new VM::MACHINE::DELEGATES::DIV();
+    //binary
+    m_delegates[12] = new VM::MACHINE::DELEGATES::OR();
+    m_delegates[13] = new VM::MACHINE::DELEGATES::AND();
+    m_delegates[14] = new VM::MACHINE::DELEGATES::XOR();
+    m_delegates[15] = new VM::MACHINE::DELEGATES::NOT();
+    m_delegates[16] = new VM::MACHINE::DELEGATES::EQ();
+    //logical
+    m_delegates[17] = new VM::MACHINE::DELEGATES::LSS();
+    m_delegates[18] = new VM::MACHINE::DELEGATES::GRT();
+    m_delegates[19] = new VM::MACHINE::DELEGATES::LSE();
+    m_delegates[20] = new VM::MACHINE::DELEGATES::GRE();
+    //system/functions
+    m_delegates[21] = new VM::MACHINE::DELEGATES::PRINT();//-
+    m_delegates[22] = new VM::MACHINE::DELEGATES::RET();//-
+    m_delegates[23] = new VM::MACHINE::DELEGATES::CALL();//-
+    m_delegates[24] = new VM::MACHINE::DELEGATES::PARG();//-
+    m_delegates[25] = new VM::MACHINE::DELEGATES::BRANCH();//-
+    m_delegates[26] = new VM::MACHINE::DELEGATES::LABEL();//-
+    m_delegates[27] = new VM::MACHINE::DELEGATES::REFF();//-
+    m_delegates[28] = new VM::MACHINE::DELEGATES::FST();//-
+    m_delegates[29] = new VM::MACHINE::DELEGATES::FEN();//-
+    m_delegates[30] = new VM::MACHINE::DELEGATES::ARG();//-
+    m_delegates[31] = new VM::MACHINE::DELEGATES::MAIN();//-
+    m_delegates[32] = new VM::MACHINE::DELEGATES::MEND();//-
 }

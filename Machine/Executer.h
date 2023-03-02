@@ -10,12 +10,16 @@
 #include "Stack/Function.h"
 #include "../types/Reference.h"
 #include "../Reading/Command.h"
-#include "DelegateTable/Delegate.h"
+
+
 
 namespace VM::MACHINE{
+    namespace DELEGATES{
+        class Delegate;
+    }
     class Executer {
     public:
-        std::vector<VM::MACHINE::Stackframe*> m_delegates;
+    std::array<VM::MACHINE::DELEGATES::Delegate*, 33> m_delegates{};
         std::vector<VM::MACHINE::Stackframe> m_stack;
         std::vector<VM::MACHINE::Function> m_functions;
         VM::MACHINE::Stackframe m_main;
@@ -29,6 +33,7 @@ namespace VM::MACHINE{
         void run();
         void printFunctions();
         void generateReferences(std::vector<READING::Command>& rawProgram);
+        void fillDelegates();
     };
 }
 
