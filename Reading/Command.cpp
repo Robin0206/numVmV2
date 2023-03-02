@@ -8,7 +8,7 @@
 void VM::READING::Command::fillArgs() {
     std::vector<BYTE> currentArg;
     int counter = 1;
-    for(unsigned char i : m_commandInformation.m_argLengths[m_opCode]){
+    for(BYTE i : m_commandInformation.m_argLengths[m_opCode]){
         currentArg = std::vector<BYTE>();
         for(int j = 0; j < i; j++){
             currentArg.push_back(m_rawCommand[counter]);
@@ -58,13 +58,9 @@ void VM::READING::Command::print() {
     std::cout << "\n";
 }
 
-VM::READING::Command::Command(const std::vector<unsigned char> &input) {
+VM::READING::Command::Command(const std::vector<BYTE> &input) {
     m_commandInformation = MISC::CommandInformation();
     this->m_rawCommand = input;
     this->setOpCode();
     this->fillArgs();
-}
-
-void VM::READING::Command::fillReferences() {
-
 }
