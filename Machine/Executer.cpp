@@ -2,9 +2,9 @@
 // Created by Robin on 01.03.2023.
 //
 
-#include "Machine.h"
+#include "Executer.h"
 
-void VM::MACHINE::Machine::fillFunctions(const std::vector<VM::READING::Command> &rawProgram) {
+void VM::MACHINE::Executer::fillFunctions(const std::vector<VM::READING::Command> &rawProgram) {
     std::vector<VM::READING::Command> currentFunction;
     std::uint32_t  currentFunctionId;
     BYTE funcIdBytes[4];
@@ -26,20 +26,20 @@ void VM::MACHINE::Machine::fillFunctions(const std::vector<VM::READING::Command>
     }
 }
 
-void VM::MACHINE::Machine::setMain(const std::vector<VM::READING::Command> &rawProgram) {
+void VM::MACHINE::Executer::setMain(const std::vector<VM::READING::Command> &rawProgram) {
 
 }
 
-void VM::MACHINE::Machine::init(const std::vector<VM::READING::Command> &rawProgram) {
+void VM::MACHINE::Executer::init(const std::vector<VM::READING::Command> &rawProgram) {
     this->fillFunctions(rawProgram);
     this->setMain(rawProgram);
 }
 
-void VM::MACHINE::Machine::run() {
+void VM::MACHINE::Executer::run() {
 
 }
 
-void VM::MACHINE::Machine::printFunctions() {
+void VM::MACHINE::Executer::printFunctions() {
     for(auto& function : m_functions){
         function.print();
     }
