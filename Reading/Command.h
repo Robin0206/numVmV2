@@ -15,15 +15,16 @@
 namespace VM::READING{
     class Command {
         MISC::CommandInformation m_commandInformation;
-        BYTE m_opCode;
         std::vector<BYTE> m_rawCommand;
         void setOpCode();
         void fillArgs();
 
     public:
+        BYTE m_opCode;
         std::vector<VM::TYPES::Reference> m_argReferences;
         std::vector<std::vector<BYTE>> m_args;
         explicit Command(const std::vector<BYTE>& input);
+        Command(const Command& input);
         void print();
     };
 }

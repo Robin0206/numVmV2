@@ -36,7 +36,7 @@ VM::TYPES::Reference::~Reference() {
     free(this->m_content);
 }
 
-VM::TYPES::Reference::Reference(VM::TYPES::Reference &toCopy) {
+VM::TYPES::Reference::Reference(const VM::TYPES::Reference &toCopy) {
     this->m_id = toCopy.m_id;
     this->m_size = toCopy.m_size;
     this->m_type = toCopy.m_type;
@@ -87,6 +87,10 @@ VM::TYPES::Reference::Reference(long double value, std::uint64_t size, std::uint
     this->m_size = size;
     this->m_type = 0x6;
     this->m_content = malloc(sizeof(long double) * size);
+}
+
+VM::TYPES::Reference::Reference() {
+    this->m_type = 255;
 }
 
 
