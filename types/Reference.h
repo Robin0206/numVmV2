@@ -6,13 +6,15 @@
 #define NUMVMV2_REFERENCE_H
 
 #include <cstdint>
+#include <cstdlib>
+#include <memory>
 
 namespace VM::TYPES{
     class Reference {
         std::uint8_t m_type;
         std::uint32_t m_id;
         std::uint64_t m_size;
-        void* m_content;
+        std::shared_ptr<void> m_content;
     public:
         explicit Reference();
         explicit Reference(bool value, std::uint64_t size, std::uint32_t id);

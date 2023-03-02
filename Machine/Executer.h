@@ -21,13 +21,14 @@ namespace VM::MACHINE{
         VM::MACHINE::Stackframe m_main;
         std::vector<VM::TYPES::Reference> m_argRegisters;
         VM::TYPES::Reference m_returnRegister;
-        void fillFunctions(const std::vector<VM::READING::Command>& rawProgram);
-        void setMain(const std::vector<VM::READING::Command>& rawProgram);
+        void fillFunctions(std::vector<VM::READING::Command>& rawProgram);
+        void setMain(std::vector<VM::READING::Command>& rawProgram);
 
         Executer() = default;
-        void init(const std::vector<VM::READING::Command>& rawProgram);
+        void init(std::vector<VM::READING::Command>& rawProgram);
         void run();
         void printFunctions();
+        void generateReferences(std::vector<READING::Command>& rawProgram);
     };
 }
 

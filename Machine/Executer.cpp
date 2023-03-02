@@ -4,7 +4,7 @@
 
 #include "Executer.h"
 
-void VM::MACHINE::Executer::fillFunctions(const std::vector<VM::READING::Command> &rawProgram) {
+void VM::MACHINE::Executer::fillFunctions(std::vector<VM::READING::Command> &rawProgram) {
     std::vector<VM::READING::Command> currentFunction;
     std::uint32_t  currentFunctionId;
     BYTE funcIdBytes[4];
@@ -26,7 +26,7 @@ void VM::MACHINE::Executer::fillFunctions(const std::vector<VM::READING::Command
     }
 }
 
-void VM::MACHINE::Executer::setMain(const std::vector<VM::READING::Command> &rawProgram) {
+void VM::MACHINE::Executer::setMain(std::vector<VM::READING::Command> &rawProgram) {
     bool inMain = false;
     std::vector<VM::READING::Command> commands;
     for(auto& command : rawProgram){
@@ -46,10 +46,11 @@ void VM::MACHINE::Executer::setMain(const std::vector<VM::READING::Command> &raw
     m_main.init(main, this);
 }
 
-void VM::MACHINE::Executer::init(const std::vector<VM::READING::Command> &rawProgram) {
+void VM::MACHINE::Executer::init(std::vector<VM::READING::Command> &rawProgram) {
+    this->generateReferences(rawProgram);
     this->fillFunctions(rawProgram);
     this->setMain(rawProgram);
-    m_stack.push_back(m_main);
+    this->m_stack.push_back(this->m_main);
 }
 
 void VM::MACHINE::Executer::run() {
@@ -63,5 +64,11 @@ void VM::MACHINE::Executer::run() {
 void VM::MACHINE::Executer::printFunctions() {
     for(auto& function : m_functions){
         function.print();
+    }
+}
+
+void VM::MACHINE::Executer::generateReferences(std::vector<READING::Command>& commands) {
+    for(auto& command : commands){
+        command.fillReferences();
     }
 }

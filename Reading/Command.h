@@ -27,6 +27,8 @@ namespace VM::READING{
         Command(const Command& input);
         void print();
         Command() = default;
+
+        void fillReferences();
     };
 }
 

@@ -73,4 +73,46 @@ VM::READING::Command::Command(const VM::READING::Command &input) {
     this->m_argReferences = input.m_argReferences;
 }
 
+void VM::READING::Command::fillReferences() {
+
+    TYPES::Reference currentReference;
+    std::uint32_t intValue = 0;
+    std::uint64_t longValue = 0;
+    for(auto& byteVector : m_args){
+
+        switch(byteVector.size()){
+            case 1:
+                currentReference = TYPES::Reference(byteVector[0], 0x1, 0x0);
+                break;
+            case 4:
+                BYTE intArr[4];
+                intArr[0] = byteVector[3];
+                intArr[1] = byteVector[2];
+                intArr[2] = byteVector[1];
+                intArr[3] = byteVector[0];
+                std::memcpy(&intArr, &intValue, 4);
+                currentReference = TYPES::Reference(intValue, 0x1, 0x0);
+                break;
+            case 8:
+                BYTE longArr[8];
+                longArr[0] = byteVector[7];
+                longArr[1] = byteVector[6];
+                longArr[2] = byteVector[5];
+                longArr[3] = byteVector[4];
+                longArr[4] = byteVector[3];
+                longArr[5] = byteVector[2];
+                longArr[6] = byteVector[1];
+                longArr[7] = byteVector[0];
+                std::memcpy(&longArr, &longValue, 8);
+                currentReference = TYPES::Reference(longValue, 0x1, 0x0);
+                break;
+            default:
+                std::cout << "ERROR" << "\n";
+                break;
+        }
+        m_argReferences.push_back(currentReference);
+    }
+
+}
+
 
