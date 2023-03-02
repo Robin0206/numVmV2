@@ -6,13 +6,13 @@
 #define NUMVMV2_DELEGATE_H
 
 
-#include "../Executer.h"
+#include "../Executor.h"
 
 namespace VM::MACHINE::DELEGATES {
     struct Delegate {
-        Executer *m_executer;
+        Executor *m_executor;
 
-        void setExecutor(Executer *executer);
+        void setExecutor(Executor *executor);
 
         virtual void run(Stackframe &stackframe) = 0;
 

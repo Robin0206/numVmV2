@@ -1,7 +1,7 @@
 #include <iostream>
 #include"Reading/ReadingModule.h"
 #include "Reading/Lexer.h"
-#include "Machine/Executer.h"
+#include "Machine/Executor.h"
 
 int main() {
     std::vector<BYTE> testProgram = {
@@ -65,7 +65,7 @@ int main() {
             0x20
     };
     VM::READING::Lexer lexer = VM::READING::Lexer(testProgram);
-    VM::MACHINE::Executer executer = VM::MACHINE::Executer();
-    executer.init(lexer.getCommands());
-    executer.run();
+    VM::MACHINE::Executor executor = VM::MACHINE::Executor();
+    executor.init(lexer.getCommands());
+    executor.run();
 }

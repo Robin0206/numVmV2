@@ -2,9 +2,9 @@
 // Created by Robin on 01.03.2023.
 //
 
-#include "Executer.h"
+#include "Executor.h"
 #include "./DelegateTable/Delegate.h"
-void VM::MACHINE::Executer::fillFunctions(std::vector<VM::READING::Command> &rawProgram) {
+void VM::MACHINE::Executor::fillFunctions(std::vector<VM::READING::Command> &rawProgram) {
     std::vector<VM::READING::Command> currentFunction;
     std::uint32_t  currentFunctionId;
     BYTE funcIdBytes[4];
@@ -26,7 +26,7 @@ void VM::MACHINE::Executer::fillFunctions(std::vector<VM::READING::Command> &raw
     }
 }
 
-void VM::MACHINE::Executer::setMain(std::vector<VM::READING::Command> &rawProgram) {
+void VM::MACHINE::Executor::setMain(std::vector<VM::READING::Command> &rawProgram) {
     bool inMain = false;
     std::vector<VM::READING::Command> commands;
     for(auto& command : rawProgram){
@@ -46,38 +46,67 @@ void VM::MACHINE::Executer::setMain(std::vector<VM::READING::Command> &rawProgra
     m_main.init(main, this);
 }
 
-void VM::MACHINE::Executer::init(std::vector<VM::READING::Command> &rawProgram) {
+void VM::MACHINE::Executor::init(std::vector<VM::READING::Command> &rawProgram) {
     this->generateReferences(rawProgram);
+    this->fillDelegates();
     this->fillFunctions(rawProgram);
     this->setMain(rawProgram);
     this->m_stack.push_back(this->m_main);
 }
 
-void VM::MACHINE::Executer::run() {
+void VM::MACHINE::Executor::run() {
     READING::Command currentCommand;
     while(!m_stack.empty()){
         currentCommand = m_stack[m_stack.size() - 1].getCurrentCommand();
+        switch(currentCommand.m_argReferences.size()){
+            case 0:
+                m_delegates[currentCommand.m_opCode]->run(
+                        m_stack[m_stack.size() - 1]
+                );
+                break;
+            case 1:
+                m_delegates[currentCommand.m_opCode]->run(
+                        m_stack[m_stack.size() - 1],
+                        currentCommand.m_argReferences[0]
+                );
+                break;
+            case 2:
+                m_delegates[currentCommand.m_opCode]->run(
+                        m_stack[m_stack.size() - 1],
+                        currentCommand.m_argReferences[0],
+                        currentCommand.m_argReferences[1]
+                );
+                break;
+            case 3:
+                m_delegates[currentCommand.m_opCode]->run(
+                        m_stack[m_stack.size() - 1],
+                        currentCommand.m_argReferences[0],
+                        currentCommand.m_argReferences[1],
+                        currentCommand.m_argReferences[2]
+                );
+                break;
+        }
         if(m_stack[m_stack.size() - 1].getProgramCounter() == m_stack[m_stack.size() - 1].m_function.m_commands.size()){
             m_stack.pop_back();
             m_argRegisters = std::vector<VM::TYPES::Reference>();
         }
-        currentCommand.print();
+
     }
 }
 
-void VM::MACHINE::Executer::printFunctions() {
+void VM::MACHINE::Executor::printFunctions() {
     for(auto& function : m_functions){
         function.print();
     }
 }
 
-void VM::MACHINE::Executer::generateReferences(std::vector<READING::Command>& commands) {
+void VM::MACHINE::Executor::generateReferences(std::vector<READING::Command>& commands) {
     for(auto& command : commands){
         command.fillReferences();
     }
 }
 
-void VM::MACHINE::Executer::fillDelegates() {
+void VM::MACHINE::Executor::fillDelegates() {
 //memory
     m_delegates[0] = new VM::MACHINE::DELEGATES::NOOP();
     m_delegates[1] = new VM::MACHINE::DELEGATES::REFA();

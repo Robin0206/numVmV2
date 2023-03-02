@@ -11,10 +11,11 @@
 
 namespace VM::TYPES{
     class Reference {
+    public:
         std::uint32_t m_id;
         std::uint64_t m_size;
         std::shared_ptr<void> m_content;
-    public:
+
         std::uint8_t m_type;
         explicit Reference();
         explicit Reference(bool value, std::uint64_t size, std::uint32_t id);

@@ -14,7 +14,7 @@ namespace VM::MACHINE {
         std::cout << "\n";
     }
 
-    void Function::init(std::uint32_t id, std::vector<READING::Command> commands, Executer* machine) {
+    void Function::init(std::uint32_t id, std::vector<READING::Command> commands, Executor* machine) {
         this->m_id = id;
         this->m_commands = commands;
         this->m_machine = machine;

@@ -4,8 +4,8 @@
 
 #include "Stackframe.h"
 
-void VM::MACHINE::Stackframe::init(VM::MACHINE::Function function, VM::MACHINE::Executer *executer) {
-    this->m_executer = executer;
+void VM::MACHINE::Stackframe::init(VM::MACHINE::Function function, VM::MACHINE::Executor *executor) {
+    this->m_executor = executor;
     this->m_function = function;
     this->m_programCounter = 0;
 }

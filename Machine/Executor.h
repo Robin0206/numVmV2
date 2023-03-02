@@ -2,8 +2,8 @@
 // Created by Robin on 01.03.2023.
 //
 
-#ifndef NUMVMV2_EXECUTER_H
-#define NUMVMV2_EXECUTER_H
+#ifndef NUMVMV2_EXECUTOR_H
+#define NUMVMV2_EXECUTOR_H
 
 #include <vector>
 #include "Stack/Stackframe.h"
@@ -17,7 +17,7 @@ namespace VM::MACHINE{
     namespace DELEGATES{
         class Delegate;
     }
-    class Executer {
+    class Executor {
     public:
     std::array<VM::MACHINE::DELEGATES::Delegate*, 33> m_delegates{};
         std::vector<VM::MACHINE::Stackframe> m_stack;
@@ -28,7 +28,7 @@ namespace VM::MACHINE{
         void fillFunctions(std::vector<VM::READING::Command>& rawProgram);
         void setMain(std::vector<VM::READING::Command>& rawProgram);
 
-        Executer() = default;
+        Executor() = default;
         void init(std::vector<VM::READING::Command>& rawProgram);
         void run();
         void printFunctions();
@@ -39,4 +39,4 @@ namespace VM::MACHINE{
 
 
 
-#endif //NUMVMV2_EXECUTER_H
+#endif //NUMVMV2_EXECUTOR_H

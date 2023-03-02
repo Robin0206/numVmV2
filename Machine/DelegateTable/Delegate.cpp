@@ -61,7 +61,7 @@ VM::MACHINE::DELEGATES::ADD::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES:
 
 }
 
-void VM::MACHINE::DELEGATES::Delegate::setExecutor(VM::MACHINE::Executer *executer) {
+void VM::MACHINE::DELEGATES::Delegate::setExecutor(VM::MACHINE::Executor *executor) {
 
 }
 
@@ -281,7 +281,12 @@ void VM::MACHINE::DELEGATES::CALL::run(VM::MACHINE::Stackframe &stackframe) {
 }
 
 void VM::MACHINE::DELEGATES::CALL::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a) {
-
+    std::uint32_t index = 0;
+    memcpy(&index, a.m_content.get(), 4);
+    Stackframe frameToPass = Stackframe();
+    frameToPass.init(stackframe.m_executor->m_functions[index],stackframe.m_executor);
+    stackframe.m_executor->m_stack.push_back(frameToPass);
+    std::cout << "Used the CALL Command";
 }
 
 void VM::MACHINE::DELEGATES::CALL::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,

@@ -9,11 +9,11 @@
 
 namespace VM::MACHINE {
     class Stackframe {
-        VM::MACHINE::Executer* m_executer;
-        std::uint64_t m_programCounter;
     public:
-    explicit Stackframe() = default;
-        void init(Function function, Executer *executer);
+        VM::MACHINE::Executor* m_executor;
+        std::uint64_t m_programCounter;
+        explicit Stackframe() = default;
+        void init(Function function, Executor *executor);
         std::uint64_t getProgramCounter();
         READING::Command getCurrentCommand();
 
