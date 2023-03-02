@@ -2,51 +2,76 @@
 // Created by Robin on 01.03.2023.
 //
 
+#include <cstdlib>
 #include "Reference.h"
 
 
 
 VM::TYPES::Reference::~Reference() {
-    delete [] m_content;
+    /*
+    switch(this->m_type){
+        case 0x0:
+            this->m_content = reinterpret_cast<bool*>(this->m_content);
+            break;
+        case 0x1:
+            this->m_content = reinterpret_cast<std::uint8_t*>(this->m_content);
+            break;
+        case 0x2:
+            this->m_content = reinterpret_cast<std::uint32_t*>(this->m_content);
+            break;
+        case 0x3:
+            this->m_content = reinterpret_cast<std::uint64_t*>(this->m_content);
+            break;
+        case 0x4:
+            this->m_content = reinterpret_cast<std::int32_t*>(this->m_content);
+            break;
+        case 0x5:
+            this->m_content = reinterpret_cast<std::int64_t*>(this->m_content);
+            break;
+        case 0x6:
+            this->m_content = reinterpret_cast<long double*>(this->m_content);
+            break;
+    }*/
+    free(this->m_content);
 }
 
 VM::TYPES::Reference::Reference(bool value, std::uint64_t size) {
     this->m_size = size;
     this->m_type = 0x0;
-    this->m_content = new bool[size];
+    this->m_content = malloc(sizeof(bool) * size);
 }
 
 VM::TYPES::Reference::Reference(std::uint8_t value, std::uint64_t size) {
     this->m_size = size;
     this->m_type = 0x1;
-    this->m_content = new std::uint8_t[size];
+    this->m_content = malloc(sizeof(std::uint8_t) * size);
 }
 VM::TYPES::Reference::Reference(std::uint32_t value, std::uint64_t size) {
     this->m_size = size;
     this->m_type = 0x2;
-    this->m_content = new std::uint32_t[size];
+    this->m_content = malloc(sizeof(std::uint32_t) * size);
 }
 VM::TYPES::Reference::Reference(std::uint64_t value, std::uint64_t size) {
     this->m_size = size;
     this->m_type = 0x3;
-    this->m_content = new std::uint64_t[size];
+    this->m_content = malloc(sizeof(uint64_t) * size);
 }
 
 VM::TYPES::Reference::Reference(std::int32_t value, std::uint64_t size) {
     this->m_size = size;
     this->m_type = 0x4;
-    this->m_content = new std::int32_t[size];
+    this->m_content = malloc(sizeof(int32_t) * size);
 }
 VM::TYPES::Reference::Reference(std::int64_t value, std::uint64_t size) {
     this->m_size = size;
     this->m_type = 0x5;
-    this->m_content = new std::int64_t[size];
+    this->m_content = malloc(sizeof(int64_t) * size);
 }
 
 VM::TYPES::Reference::Reference(long double value, std::uint64_t size) {
     this->m_size = size;
     this->m_type = 0x6;
-    this->m_content = new long double[size];
+    this->m_content = malloc(sizeof(long double) * size);
 }
 
 

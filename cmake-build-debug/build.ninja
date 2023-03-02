@@ -79,6 +79,24 @@ build CMakeFiles/numVmV2.dir/Reading/Command.cpp.o: CXX_COMPILER__numVmV2_Debug 
   OBJECT_DIR = CMakeFiles/numVmV2.dir
   OBJECT_FILE_DIR = CMakeFiles/numVmV2.dir/Reading
 
+build CMakeFiles/numVmV2.dir/Machine/Machine.cpp.o: CXX_COMPILER__numVmV2_Debug /home/robin/CLionProjects/numVmV2/Machine/Machine.cpp || cmake_object_order_depends_target_numVmV2
+  DEP_FILE = CMakeFiles/numVmV2.dir/Machine/Machine.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/numVmV2.dir
+  OBJECT_FILE_DIR = CMakeFiles/numVmV2.dir/Machine
+
+build CMakeFiles/numVmV2.dir/Machine/Command.cpp.o: CXX_COMPILER__numVmV2_Debug /home/robin/CLionProjects/numVmV2/Machine/Command.cpp || cmake_object_order_depends_target_numVmV2
+  DEP_FILE = CMakeFiles/numVmV2.dir/Machine/Command.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/numVmV2.dir
+  OBJECT_FILE_DIR = CMakeFiles/numVmV2.dir/Machine
+
+build CMakeFiles/numVmV2.dir/types/Reference.cpp.o: CXX_COMPILER__numVmV2_Debug /home/robin/CLionProjects/numVmV2/types/Reference.cpp || cmake_object_order_depends_target_numVmV2
+  DEP_FILE = CMakeFiles/numVmV2.dir/types/Reference.cpp.o.d
+  FLAGS = -g -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles/numVmV2.dir
+  OBJECT_FILE_DIR = CMakeFiles/numVmV2.dir/types
+
 
 # =============================================================================
 # Link build statements for EXECUTABLE target numVmV2
@@ -87,7 +105,7 @@ build CMakeFiles/numVmV2.dir/Reading/Command.cpp.o: CXX_COMPILER__numVmV2_Debug 
 #############################################
 # Link the executable numVmV2
 
-build numVmV2: CXX_EXECUTABLE_LINKER__numVmV2_Debug CMakeFiles/numVmV2.dir/main.cpp.o CMakeFiles/numVmV2.dir/Reading/ReadingModule.cpp.o CMakeFiles/numVmV2.dir/Reading/Lexer.cpp.o CMakeFiles/numVmV2.dir/Misc/CommandInformation.cpp.o CMakeFiles/numVmV2.dir/Reading/Command.cpp.o
+build numVmV2: CXX_EXECUTABLE_LINKER__numVmV2_Debug CMakeFiles/numVmV2.dir/main.cpp.o CMakeFiles/numVmV2.dir/Reading/ReadingModule.cpp.o CMakeFiles/numVmV2.dir/Reading/Lexer.cpp.o CMakeFiles/numVmV2.dir/Misc/CommandInformation.cpp.o CMakeFiles/numVmV2.dir/Reading/Command.cpp.o CMakeFiles/numVmV2.dir/Machine/Machine.cpp.o CMakeFiles/numVmV2.dir/Machine/Command.cpp.o CMakeFiles/numVmV2.dir/types/Reference.cpp.o
   FLAGS = -g
   OBJECT_DIR = CMakeFiles/numVmV2.dir
   POST_BUILD = :
