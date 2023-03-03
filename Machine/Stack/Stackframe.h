@@ -16,7 +16,7 @@ namespace VM::MACHINE {
         void init(Function function, Executor *executor);
         std::uint64_t getProgramCounter();
         READING::Command getCurrentCommand();
-
+        std::vector<TYPES::Reference> m_references;
         Function m_function;
     };
 }

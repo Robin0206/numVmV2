@@ -25,7 +25,7 @@ namespace VM::TYPES{
         explicit Reference(std::int32_t value, std::uint64_t size, std::uint32_t id);
         explicit Reference(std::int64_t value, std::uint64_t size, std::uint32_t id);
         explicit Reference(long double value, std::uint64_t size, std::uint32_t id);
-        ~Reference();
+        ~Reference() = default;
         Reference(const Reference& toCopy);
     };
 }

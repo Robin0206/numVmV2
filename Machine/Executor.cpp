@@ -19,7 +19,7 @@ void VM::MACHINE::Executor::fillFunctions(std::vector<VM::READING::Command> &raw
         }else if(command.m_opCode == 0x1D){//if it is the end of a function
             m_functions.push_back(VM::MACHINE::Function());
             m_functions[m_functions.size() - 1].init(currentFunctionId, currentFunction, this);
-            currentFunction = std::vector<VM::READING::Command>();
+            currentFunction.clear();
         } else{
             currentFunction.push_back(command);
         }
@@ -56,11 +56,8 @@ void VM::MACHINE::Executor::init(std::vector<VM::READING::Command> &rawProgram) 
 
 void VM::MACHINE::Executor::run() {
     READING::Command currentCommand;
-    std::size_t i, j;
     while(!m_stack.empty()){
         currentCommand = m_stack[m_stack.size() - 1].getCurrentCommand();
-        i = currentCommand.m_opCode;
-        j = m_stack.size() - 1;
         switch(currentCommand.m_argReferences.size()){
             case 0:
                 m_delegates[currentCommand.m_opCode]->run(
@@ -91,7 +88,7 @@ void VM::MACHINE::Executor::run() {
         }
         if(m_stack[m_stack.size() - 1].getProgramCounter() == m_stack[m_stack.size() - 1].m_function.m_commands.size()){
             m_stack.pop_back();
-            m_argRegisters = std::vector<VM::TYPES::Reference>();
+            m_argRegisters.clear();
         }
 
     }

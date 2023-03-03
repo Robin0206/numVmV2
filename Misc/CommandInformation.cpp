@@ -9,46 +9,46 @@ namespace VM::MISC {
         CommandInformation::CommandInformation() {
             //memory
             m_names[0]  = "NOOP";
-            m_names[1]  = "REFA";
-            m_names[2]  = "REFA";
+            m_names[1]  = "REFA";//-
+            m_names[2]  = "REFA";//-
             m_names[3]  = "MOV";
-            m_names[4]  = "SET";
+            m_names[4]  = "SET";//-
             m_names[5]  = "ASET";
             m_names[6]  = "AGET";
             m_names[7]  = "CPY";
-            //arithmetic
-            m_names[8]  = "ADD";
-            m_names[9]  = "SUB";
-            m_names[10] = "MUL";
-            m_names[11] = "DIV";
-            //binary
-            m_names[12] = "OR";
-            m_names[13] = "AND";
-            m_names[14] = "XOR";
-            m_names[15] = "NOT";
-            m_names[16] = "EQ";
-            //logical
-            m_names[17] = "LSS";
-            m_names[18] = "GRT";
-            m_names[19] = "LSE";
-            m_names[20] = "GRE";
+            //arithmetic ___
+            m_names[8]  = "ADD";//-
+            m_names[9]  = "SUB";//-
+            m_names[10] = "MUL";//-
+            m_names[11] = "DIV";//-
+            //binary__
+            m_names[12] = "OR";//-
+            m_names[13] = "AND";//-
+            m_names[14] = "XOR";//-
+            m_names[15] = "NOT";//-
+            m_names[16] = "EQ";//-
+            //logical__
+            m_names[17] = "LSS";//-
+            m_names[18] = "GRT";//-
+            m_names[19] = "LSE";//-
+            m_names[20] = "GRE";//-
             //system/functions
             m_names[21] = "PRINT";//-
             m_names[22] = "RET";//-
             m_names[23] = "CALL";//-
-            m_names[24] = "PARG";//-
-            m_names[25] = "BRANCH";//-
-            m_names[26] = "LABEL";//-
+            m_names[24] = "PARG";
+            m_names[25] = "BRANCH";
+            m_names[26] = "LABEL";
             m_names[27] = "REFF";//-
             m_names[28] = "FST";//-
             m_names[29] = "FEN";//-
-            m_names[30] = "ARG";//-
+            m_names[30] = "ARG";
             m_names[31] = "MAIN";//-
             m_names[32] = "MEND";//-
 
             m_argLengths[0] = std::vector<std::uint8_t>{};//NOOP
             m_argLengths[1] = std::vector<std::uint8_t>{4,4};//REFA
-            m_argLengths[2] = std::vector<std::uint8_t>{4,4,4};//REFA
+            m_argLengths[2] = std::vector<std::uint8_t>{4,4,8};//REFA
             m_argLengths[3] = std::vector<std::uint8_t>{4,4};//MOV
             m_argLengths[4] = std::vector<std::uint8_t>{4,8};//SET
             m_argLengths[5] = std::vector<std::uint8_t>{4,4,8};//ASET

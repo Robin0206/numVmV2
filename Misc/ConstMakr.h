@@ -10,5 +10,5 @@
 #define BYTE_LENGTH 1
 #define INT_LENGTH 4
 #define LONG_LENGTH 8
-#define DEC_LENGTH 8
+#define DEC_LENGTH sizeof(long double)
 #endif //NUMVMV2_CONSTMAKR_H

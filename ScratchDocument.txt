@@ -1,0 +1,87 @@
+void VM::MACHINE::DELEGATES::GRE::run(VM::MACHINE::Stackframe &stackframe) {
+    throw std::invalid_argument("EXCEPTION: 0 Arguments got passed (by the machine!) to GRE");
+}
+
+void VM::MACHINE::DELEGATES::GRE::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a) {
+    throw std::invalid_argument("EXCEPTION: 1 Argument got passed (by the machine!) to GRE");
+}
+
+void VM::MACHINE::DELEGATES::GRE::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
+                                     VM::TYPES::Reference &b) {
+    throw std::invalid_argument("EXCEPTION: 2 Arguments got passed (by the machine!) to GRE");
+}
+
+void
+VM::MACHINE::DELEGATES::GRE::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
+                                VM::TYPES::Reference &c) {
+    //See if types match
+    if(a.m_type != 0x0){
+        throw std::invalid_argument("EXCEPTION: first Argument passed (by the machine) to GRE must be a bool");
+    }
+    if(b.m_type != c.m_type){
+        throw std::invalid_argument("EXCEPTION: invalid types got passed (by the machine!) to GRE(types of second and third argument dont match)");
+    }
+    TYPES::Reference *dst;
+    TYPES::Reference *opA;
+    TYPES::Reference *opB;
+    std::uint32_t
+            dstId = *(reinterpret_cast<bool *>(a.m_content.get())),
+            aId = *(reinterpret_cast<std::uint32_t *>(b.m_content.get())),
+            bId = *(reinterpret_cast<std::uint32_t *>(c.m_content.get()));
+    bool
+            dstSet = false,
+            opASet = false,
+            opBSet = false,
+            allSet = false;
+    for (auto &ref: stackframe.m_references) {
+        if (ref.m_id == dstId) {
+            dst = &ref;
+            dstSet = true;
+        }
+        if (ref.m_id == aId) {
+            opA = &ref;
+            opASet = true;
+        }
+        if (ref.m_id == bId) {
+            opB = &ref;
+            opBSet = true;
+        }
+        if (opASet && opBSet && dstSet) {
+            allSet = true;
+            break;
+        }
+    }
+    bool result;
+    switch (opA->m_type) {
+        case 0x0://bool
+            result = 0<=(std::memcmp(opA->m_content.get(), opB->m_content.get(), BOOL_LENGTH));
+            std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
+            break;
+        case 0x1://byte
+            result = 0<=(std::memcmp(opA->m_content.get(), opB->m_content.get(), BYTE_LENGTH));
+            std::memcpy(dst->m_content.get(), &result, BYTE_LENGTH);
+            break;
+        case 0x2://uint32
+            result = 0<=(std::memcmp(opA->m_content.get(), opB->m_content.get(), INT_LENGTH));
+            std::memcpy(dst->m_content.get(), &result, INT_LENGTH);
+            break;
+        case 0x3://uint64
+            result = 0<=(std::memcmp(opA->m_content.get(), opB->m_content.get(), LONG_LENGTH));
+            std::memcpy(dst->m_content.get(), &result, LONG_LENGTH);
+            break;
+        case 0x4://int32
+            result = 0<=(std::memcmp(opA->m_content.get(), opB->m_content.get(), INT_LENGTH));
+            std::memcpy(dst->m_content.get(), &result, INT_LENGTH);
+            break;
+        case 0x5://int64
+            result = 0<=(std::memcmp(opA->m_content.get(), opB->m_content.get(), LONG_LENGTH));
+            std::memcpy(dst->m_content.get(), &result, LONG_LENGTH);
+            break;
+        case 0x6://long double
+            result = 0<=(std::memcmp(opA->m_content.get(), opB->m_content.get(), DEC_LENGTH));
+            std::memcpy(dst->m_content.get(), &result, DEC_LENGTH);
+            break;
+        default:
+            throw std::invalid_argument("EXCEPTION: called GRE with invalid type?????.");
+    }
+}
