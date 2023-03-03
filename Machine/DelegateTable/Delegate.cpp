@@ -1798,7 +1798,7 @@ void VM::MACHINE::DELEGATES::LABEL::run(VM::MACHINE::Stackframe &stackframe) {
 void VM::MACHINE::DELEGATES::LABEL::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a) {
     std::pair<std::uint32_t, std::uint32_t> result;
     result.first = *(reinterpret_cast<std::uint32_t*>(a.m_content.get()));
-    result.second = stackframe.m_programCounter+1;
+    result.second = stackframe.m_programCounter + 1;
     stackframe.m_labels.push_back(result);
 }
 
