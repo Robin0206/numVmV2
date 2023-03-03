@@ -17,6 +17,7 @@ namespace VM::MACHINE {
         std::uint64_t getProgramCounter();
         READING::Command getCurrentCommand();
         std::vector<TYPES::Reference> m_references;
+        std::vector<std::pair<std::uint32_t, std::uint32_t>> m_labels;
         Function m_function;
     };
 }

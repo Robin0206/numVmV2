@@ -1754,39 +1754,62 @@ void VM::MACHINE::DELEGATES::PRINT::run(VM::MACHINE::Stackframe &stackframe, VM:
 }
 
 void VM::MACHINE::DELEGATES::BRANCH::run(VM::MACHINE::Stackframe &stackframe) {
-
+    throw std::invalid_argument("EXCEPTION: 0 Arguments got passed (by the machine!) to BRANCH");
 }
 
 void VM::MACHINE::DELEGATES::BRANCH::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a) {
-
+    throw std::invalid_argument("EXCEPTION: 1 Argument got passed (by the machine!) to BRANCH");
 }
 
 void VM::MACHINE::DELEGATES::BRANCH::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
                                          VM::TYPES::Reference &b) {
+    std::uint32_t labelId = *(reinterpret_cast<std::uint32_t*>(a.m_content.get()));
+    std::uint32_t newPc = - 1;
+    TYPES::Reference* boolRef;
+    bool foundBoolRef = false;
 
+    for(auto& ref : stackframe.m_references){
+        if(*(reinterpret_cast<std::uint32_t*>(b.m_content.get())) == ref.m_id){
+            boolRef = &ref;
+            foundBoolRef = true;
+            break;
+        }
+    }
+    for(auto& pair : stackframe.m_labels){
+        if(pair.first == labelId){
+            newPc = pair.second;
+            break;
+        }
+    }
+    if(*(reinterpret_cast<bool*>(boolRef->m_content.get()))){
+        stackframe.m_programCounter = newPc;
+    }
 }
 
 void VM::MACHINE::DELEGATES::BRANCH::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
                                          VM::TYPES::Reference &b, VM::TYPES::Reference &c) {
-
+    throw std::invalid_argument("EXCEPTION: 3 Arguments got passed (by the machine!) to BRANCH");
 }
 
 void VM::MACHINE::DELEGATES::LABEL::run(VM::MACHINE::Stackframe &stackframe) {
-
+    throw std::invalid_argument("EXCEPTION: 0 Arguments got passed (by the machine!) to LABEL");
 }
 
 void VM::MACHINE::DELEGATES::LABEL::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a) {
-
+    std::pair<std::uint32_t, std::uint32_t> result;
+    result.first = *(reinterpret_cast<std::uint32_t*>(a.m_content.get()));
+    result.second = stackframe.m_programCounter+1;
+    stackframe.m_labels.push_back(result);
 }
 
 void VM::MACHINE::DELEGATES::LABEL::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
                                         VM::TYPES::Reference &b) {
-
+    throw std::invalid_argument("EXCEPTION: 2 Arguments got passed (by the machine!) to LABEL");
 }
 
 void VM::MACHINE::DELEGATES::LABEL::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
                                         VM::TYPES::Reference &b, VM::TYPES::Reference &c) {
-
+    throw std::invalid_argument("EXCEPTION: 3 Arguments got passed (by the machine!) to LABEL");
 }
 
 void VM::MACHINE::DELEGATES::MAIN::run(VM::MACHINE::Stackframe &stackframe) {

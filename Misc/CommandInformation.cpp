@@ -72,8 +72,8 @@ namespace VM::MISC {
             m_argLengths[22] = std::vector<std::uint8_t>{4};//RET
             m_argLengths[23] = std::vector<std::uint8_t>{4};//CALL
             m_argLengths[24] = std::vector<std::uint8_t>{4};//PARG
-            m_argLengths[25] = std::vector<std::uint8_t>{4,4};//BRANCH
-            m_argLengths[26] = std::vector<std::uint8_t>{4};//LABEL
+            m_argLengths[25] = std::vector<std::uint8_t>{4,4};//BRANCH a = label b = bool
+            m_argLengths[26] = std::vector<std::uint8_t>{4};//LABEL//--
             m_argLengths[27] = std::vector<std::uint8_t>{4};//REFF
             m_argLengths[28] = std::vector<std::uint8_t>{4};//FST
             m_argLengths[29] = std::vector<std::uint8_t>{4};//FEN
