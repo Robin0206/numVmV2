@@ -827,13 +827,7 @@ void VM::MACHINE::DELEGATES::EQ::run(VM::MACHINE::Stackframe &stackframe, VM::TY
 void
 VM::MACHINE::DELEGATES::EQ::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
                                 VM::TYPES::Reference &c) {
-    //See if types match
-    if(a.m_type != 0x0){
-        throw std::invalid_argument("EXCEPTION: first Argument passed (by the machine) to EQ must be a bool");
-    }
-    if(b.m_type != c.m_type){
-        throw std::invalid_argument("EXCEPTION: invalid types got passed (by the machine!) to EQ(types of second and third argument dont match)");
-    }
+
     TYPES::Reference *dst;
     TYPES::Reference *opA;
     TYPES::Reference *opB;
@@ -863,6 +857,13 @@ VM::MACHINE::DELEGATES::EQ::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::
             allSet = true;
             break;
         }
+    }
+    //See if types match
+    if(dst->m_type != 0x0){
+        throw std::invalid_argument("EXCEPTION: first Argument passed (by the machine) to EQ must be a bool");
+    }
+    if(opB->m_type != opA->m_type){
+        throw std::invalid_argument("EXCEPTION: invalid types got passed (by the machine!) to EQ(types of second and third argument dont match)");
     }
     bool result;
     switch (opA->m_type) {
@@ -916,12 +917,7 @@ void
 VM::MACHINE::DELEGATES::LSS::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
                                  VM::TYPES::Reference &c) {
     //See if types match
-    if(a.m_type != 0x0){
-        throw std::invalid_argument("EXCEPTION: first Argument passed (by the machine) to LSS must be a bool");
-    }
-    if(b.m_type != c.m_type){
-        throw std::invalid_argument("EXCEPTION: invalid types got passed (by the machine!) to LSS(types of second and third argument dont match)");
-    }
+
     TYPES::Reference *dst;
     TYPES::Reference *opA;
     TYPES::Reference *opB;
@@ -951,6 +947,12 @@ VM::MACHINE::DELEGATES::LSS::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES:
             allSet = true;
             break;
         }
+    }
+    if(dst->m_type != 0x0){
+        throw std::invalid_argument("EXCEPTION: first Argument passed (by the machine) to LSS must be a bool");
+    }
+    if(opB->m_type != opA->m_type){
+        throw std::invalid_argument("EXCEPTION: invalid types got passed (by the machine!) to LSS(types of second and third argument dont match)");
     }
     bool result;
     switch (opA->m_type) {
@@ -1003,13 +1005,7 @@ void VM::MACHINE::DELEGATES::GRT::run(VM::MACHINE::Stackframe &stackframe, VM::T
 void
 VM::MACHINE::DELEGATES::GRT::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
                                  VM::TYPES::Reference &c) {
-    //See if types match
-    if(a.m_type != 0x0){
-        throw std::invalid_argument("EXCEPTION: first Argument passed (by the machine) to GRT must be a bool");
-    }
-    if(b.m_type != c.m_type){
-        throw std::invalid_argument("EXCEPTION: invalid types got passed (by the machine!) to GRT(types of second and third argument dont match)");
-    }
+
     TYPES::Reference *dst;
     TYPES::Reference *opA;
     TYPES::Reference *opB;
@@ -1039,6 +1035,13 @@ VM::MACHINE::DELEGATES::GRT::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES:
             allSet = true;
             break;
         }
+    }
+    //See if types match
+    if(dst->m_type != 0x0){
+        throw std::invalid_argument("EXCEPTION: first Argument passed (by the machine) to GRT must be a bool");
+    }
+    if(opB->m_type != opA->m_type){
+        throw std::invalid_argument("EXCEPTION: invalid types got passed (by the machine!) to GRT(types of second and third argument dont match)");
     }
     bool result;
     switch (opA->m_type) {
@@ -1091,13 +1094,7 @@ void VM::MACHINE::DELEGATES::LSE::run(VM::MACHINE::Stackframe &stackframe, VM::T
 void
 VM::MACHINE::DELEGATES::LSE::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
                                  VM::TYPES::Reference &c) {
-    //See if types match
-    if(a.m_type != 0x0){
-        throw std::invalid_argument("EXCEPTION: first Argument passed (by the machine) to LSE must be a bool");
-    }
-    if(b.m_type != c.m_type){
-        throw std::invalid_argument("EXCEPTION: invalid types got passed (by the machine!) to LSE(types of second and third argument dont match)");
-    }
+
     TYPES::Reference *dst;
     TYPES::Reference *opA;
     TYPES::Reference *opB;
@@ -1127,6 +1124,13 @@ VM::MACHINE::DELEGATES::LSE::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES:
             allSet = true;
             break;
         }
+    }
+    //See if types match
+    if(dst->m_type != 0x0){
+        throw std::invalid_argument("EXCEPTION: first Argument passed (by the machine) to LSE must be a bool");
+    }
+    if(opB->m_type != opA->m_type){
+        throw std::invalid_argument("EXCEPTION: invalid types got passed (by the machine!) to LSE(types of second and third argument dont match)");
     }
     bool result;
     switch (opA->m_type) {
@@ -1179,13 +1183,7 @@ void VM::MACHINE::DELEGATES::GRE::run(VM::MACHINE::Stackframe &stackframe, VM::T
 void
 VM::MACHINE::DELEGATES::GRE::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
                                  VM::TYPES::Reference &c) {
-    //See if types match
-    if(a.m_type != 0x0){
-        throw std::invalid_argument("EXCEPTION: first Argument passed (by the machine) to GRE must be a bool");
-    }
-    if(b.m_type != c.m_type){
-        throw std::invalid_argument("EXCEPTION: invalid types got passed (by the machine!) to GRE(types of second and third argument dont match)");
-    }
+
     TYPES::Reference *dst;
     TYPES::Reference *opA;
     TYPES::Reference *opB;
@@ -1215,6 +1213,13 @@ VM::MACHINE::DELEGATES::GRE::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES:
             allSet = true;
             break;
         }
+    }
+    //See if types match
+    if(dst->m_type != 0x0){
+        throw std::invalid_argument("EXCEPTION: first Argument passed (by the machine) to GRE must be a bool");
+    }
+    if(opB->m_type != opA->m_type){
+        throw std::invalid_argument("EXCEPTION: invalid types got passed (by the machine!) to GRE(types of second and third argument dont match)");
     }
     bool result;
     switch (opA->m_type) {
@@ -1642,22 +1647,51 @@ VM::MACHINE::DELEGATES::AGET::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES
 }
 
 void VM::MACHINE::DELEGATES::CPY::run(VM::MACHINE::Stackframe &stackframe) {
-
+    throw std::invalid_argument("EXCEPTION: 0 Arguments got passed (by the machine!) to CPY");
 }
 
 void VM::MACHINE::DELEGATES::CPY::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a) {
-
+    throw std::invalid_argument("EXCEPTION: 1 Argument got passed (by the machine!) to CPY");
 }
 
 void VM::MACHINE::DELEGATES::CPY::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
                                       VM::TYPES::Reference &b) {
-
+    TYPES::Reference* dst;
+    TYPES::Reference* src;
+    std::uint32_t
+        dstId = *(reinterpret_cast<std::uint32_t*>(a.m_content.get())),
+        srcId = *(reinterpret_cast<std::uint32_t*>(b.m_content.get()));
+    bool
+        foundDst = false,
+        foundSrc = false;
+    for(auto& ref : stackframe.m_references){
+        if(!foundDst && ref.m_id == dstId){
+            dst = &ref;
+            foundDst = true;
+        }
+        if(!foundSrc && ref.m_id == srcId){
+            src = &ref;
+            foundSrc = true;
+        }
+        if(foundSrc && foundDst){
+            break;
+        }
+    }
+    int typeSizes[7];
+    typeSizes[0] = BOOL_LENGTH;
+    typeSizes[1] = BYTE_LENGTH;
+    typeSizes[2] = INT_LENGTH;
+    typeSizes[3] = LONG_LENGTH;
+    typeSizes[4] = INT_LENGTH;
+    typeSizes[5] = LONG_LENGTH;
+    typeSizes[6] = DEC_LENGTH;
+    std::memcpy(dst->m_content.get(), src->m_content.get(), typeSizes[dst->m_type]);
 }
 
 void
 VM::MACHINE::DELEGATES::CPY::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
                                  VM::TYPES::Reference &c) {
-
+    throw std::invalid_argument("EXCEPTION: 3 Arguments got passed (by the machine!) to CPY");
 }
 
 void VM::MACHINE::DELEGATES::PRINT::run(VM::MACHINE::Stackframe &stackframe) {
@@ -1808,6 +1842,25 @@ void VM::MACHINE::DELEGATES::NOOP::run(VM::MACHINE::Stackframe &stackframe, VM::
 
 void
 VM::MACHINE::DELEGATES::NOOP::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
+                                  VM::TYPES::Reference &c) {
+
+}
+
+void VM::MACHINE::DELEGATES::RETG::run(VM::MACHINE::Stackframe &stackframe) {
+
+}
+
+void VM::MACHINE::DELEGATES::RETG::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a) {
+
+}
+
+void VM::MACHINE::DELEGATES::RETG::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
+                                       VM::TYPES::Reference &b) {
+
+}
+
+void
+VM::MACHINE::DELEGATES::RETG::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
                                   VM::TYPES::Reference &c) {
 
 }

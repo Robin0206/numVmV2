@@ -19,7 +19,7 @@ namespace VM::MACHINE{
     }
     class Executor {
     public:
-    std::array<VM::MACHINE::DELEGATES::Delegate*, 33> m_delegates{};
+    std::array<VM::MACHINE::DELEGATES::Delegate*, 34> m_delegates{};
         std::vector<VM::MACHINE::Stackframe> m_stack;
         std::vector<VM::MACHINE::Function> m_functions;
         VM::MACHINE::Stackframe m_main;

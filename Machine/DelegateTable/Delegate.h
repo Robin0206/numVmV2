@@ -351,5 +351,15 @@ namespace VM::MACHINE::DELEGATES {
 
         void run(Stackframe &stackframe, TYPES::Reference &a, TYPES::Reference &b, TYPES::Reference &c) override;
     };
+    struct RETG : public Delegate{
+        void run(Stackframe &stackframe) override;
+
+        void run(Stackframe &stackframe, TYPES::Reference &a) override;
+
+        void run(Stackframe &stackframe, TYPES::Reference &a, TYPES::Reference &b) override;
+
+        void run(Stackframe &stackframe, TYPES::Reference &a, TYPES::Reference &b, TYPES::Reference &c) override;
+
+    };
 }
 #endif //NUMVMV2_DELEGATE_H

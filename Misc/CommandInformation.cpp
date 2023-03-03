@@ -15,7 +15,7 @@ namespace VM::MISC {
             m_names[4]  = "SET";//-
             m_names[5]  = "ASET";
             m_names[6]  = "AGET";
-            m_names[7]  = "CPY";
+            m_names[7]  = "CPY";//-
             //arithmetic ___
             m_names[8]  = "ADD";//-
             m_names[9]  = "SUB";//-
@@ -40,11 +40,12 @@ namespace VM::MISC {
             m_names[25] = "BRANCH";
             m_names[26] = "LABEL";
             m_names[27] = "REFF";//-
-            m_names[28] = "FST";//-
-            m_names[29] = "FEN";//-
+            m_names[28] = "FST";
+            m_names[29] = "FEN";
             m_names[30] = "ARG";
-            m_names[31] = "MAIN";//-
-            m_names[32] = "MEND";//-
+            m_names[31] = "MAIN";
+            m_names[32] = "MEND";
+            m_names[33] = "RETG";
 
             m_argLengths[0] = std::vector<std::uint8_t>{};//NOOP
             m_argLengths[1] = std::vector<std::uint8_t>{4,4};//REFA
@@ -53,7 +54,7 @@ namespace VM::MISC {
             m_argLengths[4] = std::vector<std::uint8_t>{4,8};//SET
             m_argLengths[5] = std::vector<std::uint8_t>{4,4,8};//ASET
             m_argLengths[6] = std::vector<std::uint8_t>{4,4,8};//AGET
-            m_argLengths[7] = std::vector<std::uint8_t>{4,4};//CPY
+            m_argLengths[7] = std::vector<std::uint8_t>{4,4};//CPY  a = dst b = src  number of bytes copied are the byteSize of src
             m_argLengths[8] = std::vector<std::uint8_t>{4,4,4};//ADD
             m_argLengths[9] = std::vector<std::uint8_t>{4,4,4};//SUB
             m_argLengths[10] = std::vector<std::uint8_t>{4,4,4};//MUL
@@ -79,5 +80,6 @@ namespace VM::MISC {
             m_argLengths[30] = std::vector<std::uint8_t>{4};//ARG
             m_argLengths[31] = std::vector<std::uint8_t>{};//MAIN
             m_argLengths[32] = std::vector<std::uint8_t>{};//MEND
+            m_argLengths[33] = std::vector<std::uint8_t>{4};//MEND
         }
     } // MISC

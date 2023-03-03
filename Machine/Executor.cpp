@@ -145,4 +145,5 @@ void VM::MACHINE::Executor::fillDelegates() {
     m_delegates[30] = new VM::MACHINE::DELEGATES::ARG();//-
     m_delegates[31] = new VM::MACHINE::DELEGATES::MAIN();//-
     m_delegates[32] = new VM::MACHINE::DELEGATES::MEND();//-
+    m_delegates[33] = new VM::MACHINE::DELEGATES::RETG();//-
 }
