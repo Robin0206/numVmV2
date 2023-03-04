@@ -1763,6 +1763,7 @@ void VM::MACHINE::DELEGATES::BRANCH::run(VM::MACHINE::Stackframe &stackframe, VM
 
 void VM::MACHINE::DELEGATES::BRANCH::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
                                          VM::TYPES::Reference &b) {
+
     std::uint32_t labelId = *(reinterpret_cast<std::uint32_t*>(a.m_content.get()));
     std::uint32_t newPc = - 1;
     TYPES::Reference* boolRef;
@@ -1784,6 +1785,7 @@ void VM::MACHINE::DELEGATES::BRANCH::run(VM::MACHINE::Stackframe &stackframe, VM
     if(*(reinterpret_cast<bool*>(boolRef->m_content.get()))){
         stackframe.m_programCounter = newPc;
     }
+    //std::cout << (std::uint32_t)stackframe.m_function.m_commands[stackframe.m_programCounter].m_opCode << "\n";
 }
 
 void VM::MACHINE::DELEGATES::BRANCH::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
@@ -1798,7 +1800,7 @@ void VM::MACHINE::DELEGATES::LABEL::run(VM::MACHINE::Stackframe &stackframe) {
 void VM::MACHINE::DELEGATES::LABEL::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a) {
     std::pair<std::uint32_t, std::uint32_t> result;
     result.first = *(reinterpret_cast<std::uint32_t*>(a.m_content.get()));
-    result.second = stackframe.m_programCounter + 1;
+    result.second = stackframe.m_programCounter;
     stackframe.m_labels.push_back(result);
 }
 
