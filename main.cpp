@@ -4,7 +4,7 @@
 #include "Machine/Executor.h"
 
 int main() {
-    std::vector<BYTE> testProgram = {
+    /*std::vector<BYTE> testProgram = {
 
             0x1C, 0x0, 0x0, 0x0, 0x1,
             0x1, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x3,
@@ -37,7 +37,10 @@ int main() {
             0x1F,
             0x17, 0x0, 0x0, 0x0, 0x1,
             0x20
-    };
+    };*/
+    VM::READING::ReadingModule reader = VM::READING::ReadingModule("../byteCode.nvm");
+    reader.run();
+    std::vector<BYTE> testProgram = reader.getRawProgram();
     VM::READING::Lexer lexer = VM::READING::Lexer(testProgram);
     std::cout << "Code:" << "\n";
     lexer.printCommands();

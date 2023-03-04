@@ -832,7 +832,7 @@ VM::MACHINE::DELEGATES::EQ::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::
     TYPES::Reference *opA;
     TYPES::Reference *opB;
     std::uint32_t
-            dstId = *(reinterpret_cast<bool *>(a.m_content.get())),
+            dstId = *(reinterpret_cast<std::uint32_t *>(a.m_content.get())),
             aId = *(reinterpret_cast<std::uint32_t *>(b.m_content.get())),
             bId = *(reinterpret_cast<std::uint32_t *>(c.m_content.get()));
     bool
@@ -873,15 +873,15 @@ VM::MACHINE::DELEGATES::EQ::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::
             break;
         case 0x1://byte
             result = 0==(std::memcmp(opA->m_content.get(), opB->m_content.get(), BYTE_LENGTH));
-            std::memcpy(dst->m_content.get(), &result, BYTE_LENGTH);
+            std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x2://uint32
             result = 0==(std::memcmp(opA->m_content.get(), opB->m_content.get(), INT_LENGTH));
-            std::memcpy(dst->m_content.get(), &result, INT_LENGTH);
+            std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x3://uint64
             result = 0==(std::memcmp(opA->m_content.get(), opB->m_content.get(), LONG_LENGTH));
-            std::memcpy(dst->m_content.get(), &result, LONG_LENGTH);
+            std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x4://int32
             result = 0==(std::memcmp(opA->m_content.get(), opB->m_content.get(), INT_LENGTH));
