@@ -46,6 +46,6 @@ int main() {
     lexer.printCommands();
     VM::MACHINE::Executor executor = VM::MACHINE::Executor();
     executor.init(lexer.getCommands());
-    std::cout << "\nResult: ";
+    std::cout << "\nResult: \n";
     executor.run();
 }

@@ -1872,20 +1872,77 @@ VM::MACHINE::DELEGATES::NOOP::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES
 }
 
 void VM::MACHINE::DELEGATES::RETG::run(VM::MACHINE::Stackframe &stackframe) {
-
+    throw std::invalid_argument("EXCEPTION: 0 Arguments got passed (by the machine!) to RETG");
 }
 
 void VM::MACHINE::DELEGATES::RETG::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a) {
+    TYPES::Reference* dst;
+    bool foundRef = false;
+    std::uint32_t dstId = *(reinterpret_cast<std::uint32_t*>(a.m_content.get()));
+    for(auto& ref : stackframe.m_references){
+        if(ref.m_id == dstId){
+            dst = &ref;
+            foundRef = true;
+            break;
+        }
+    }
+    if(foundRef){
+        bool boolValue = false;
+        std::uint8_t byteValue = 0;
+        std::uint32_t uintValue = 0;
+        std::uint64_t ulongValue = 0;
+        std::int32_t intValue = 0;
+        std::int64_t longValue = 0;
+        long double ldValue = 0;
 
+        if(dst->m_type == stackframe.m_executor->m_returnRegister.m_type){
+            switch(dst->m_type){
+                case 0:
+                    if(*(reinterpret_cast<bool*>(stackframe.m_executor->m_returnRegister.m_content.get()))){
+                        boolValue = true;
+                    }
+                    std::memcpy (dst->m_content.get(), &boolValue, BOOL_LENGTH);
+                    break;
+                case 1:
+                    byteValue = *(reinterpret_cast<std::uint8_t*>(stackframe.m_executor->m_returnRegister.m_content.get()));
+                    std::memcpy (dst->m_content.get(), &byteValue, BYTE_LENGTH);
+                    break;
+                case 2:
+                    uintValue = *(reinterpret_cast<std::uint32_t*>(stackframe.m_executor->m_returnRegister.m_content.get()));
+                    std::memcpy (dst->m_content.get(), &uintValue, INT_LENGTH);
+                    break;
+                case 3:
+                    ulongValue = *(reinterpret_cast<std::uint64_t*>(stackframe.m_executor->m_returnRegister.m_content.get()));
+                    std::memcpy (dst->m_content.get(), &ulongValue, LONG_LENGTH);
+                    break;
+                case 4:
+                    intValue = *(reinterpret_cast<std::int32_t*>(stackframe.m_executor->m_returnRegister.m_content.get()));
+                    std::memcpy (dst->m_content.get(), &uintValue, INT_LENGTH);
+                    break;
+                case 5:
+                    longValue = *(reinterpret_cast<std::int64_t*>(stackframe.m_executor->m_returnRegister.m_content.get()));
+                    std::memcpy (dst->m_content.get(), &longValue, LONG_LENGTH);
+                    break;
+                case 6:
+                    ldValue = *(reinterpret_cast<long double*>(stackframe.m_executor->m_returnRegister.m_content.get()));
+                    std::memcpy (dst->m_content.get(), &ldValue, DEC_LENGTH);
+                    break;
+            }
+        }else{
+            throw std::invalid_argument("EXCEPTION: type in return register doesnt match first argument to (RETG)");
+        }
+    }else{
+        throw std::invalid_argument("EXCEPTION: invalid first argument got passed (by the machine!) to RETG");
+    }
 }
 
 void VM::MACHINE::DELEGATES::RETG::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
                                        VM::TYPES::Reference &b) {
-
+    throw std::invalid_argument("EXCEPTION: 2 Arguments got passed (by the machine!) to RETG");
 }
 
 void
 VM::MACHINE::DELEGATES::RETG::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
                                   VM::TYPES::Reference &c) {
-
+    throw std::invalid_argument("EXCEPTION: 3 Arguments got passed (by the machine!) to RETG");
 }

@@ -80,6 +80,6 @@ namespace VM::MISC {
             m_argLengths[30] = std::vector<std::uint8_t>{4};//ARG
             m_argLengths[31] = std::vector<std::uint8_t>{};//MAIN
             m_argLengths[32] = std::vector<std::uint8_t>{};//MEND
-            m_argLengths[33] = std::vector<std::uint8_t>{4};//MEND
+            m_argLengths[33] = std::vector<std::uint8_t>{4};//RETG
         }
     } // MISC
