@@ -8,13 +8,13 @@
 namespace VM::MISC {
         CommandInformation::CommandInformation() {
             //memory
-            m_names[0]  = "NOOP";
+            m_names[0]  = "NOOP";//-
             m_names[1]  = "REFA";//-
             m_names[2]  = "REFA";//-
-            m_names[3]  = "MOV";
+            m_names[3]  = "MOV";// not used
             m_names[4]  = "SET";//-
-            m_names[5]  = "ASET";
-            m_names[6]  = "AGET";
+            m_names[5]  = "ASET";//-untested
+            m_names[6]  = "AGET";//-untested
             m_names[7]  = "CPY";//-
             //arithmetic ___
             m_names[8]  = "ADD";//-
@@ -35,17 +35,17 @@ namespace VM::MISC {
             //system/functions
             m_names[21] = "PRINT";//-
             m_names[22] = "RET";//-
-            m_names[23] = "CALL";//-
-            m_names[24] = "PARG";
-            m_names[25] = "BRANCH";
-            m_names[26] = "LABEL";
+            m_names[23] = "CALL";//-untested
+            m_names[24] = "PARG";//-untested
+            m_names[25] = "BRANCH";//-
+            m_names[26] = "LABEL";//-
             m_names[27] = "REFF";//-
-            m_names[28] = "FST";
-            m_names[29] = "FEN";
-            m_names[30] = "ARG";
-            m_names[31] = "MAIN";
-            m_names[32] = "MEND";
-            m_names[33] = "RETG";
+            m_names[28] = "FST";//-
+            m_names[29] = "FEN";//-
+            m_names[30] = "ARG";//-untested
+            m_names[31] = "MAIN";//-
+            m_names[32] = "MEND";//-
+            m_names[33] = "RETG";//-
 
             m_argLengths[0] = std::vector<std::uint8_t>{};//NOOP
             m_argLengths[1] = std::vector<std::uint8_t>{4,4};//REFA

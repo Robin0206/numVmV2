@@ -1396,7 +1396,7 @@ VM::MACHINE::DELEGATES::ARG::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES:
 }
 
 void VM::MACHINE::DELEGATES::FST::run(VM::MACHINE::Stackframe &stackframe) {
-
+    throw std::invalid_argument("EXCEPTION: 0 Arguments got passed (by the machine!) to FST");
 }
 
 void VM::MACHINE::DELEGATES::FST::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a) {
@@ -1405,17 +1405,17 @@ void VM::MACHINE::DELEGATES::FST::run(VM::MACHINE::Stackframe &stackframe, VM::T
 
 void VM::MACHINE::DELEGATES::FST::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
                                       VM::TYPES::Reference &b) {
-
+    throw std::invalid_argument("EXCEPTION: 2 Arguments got passed (by the machine!) to FST");
 }
 
 void
 VM::MACHINE::DELEGATES::FST::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
                                  VM::TYPES::Reference &c) {
-
+    throw std::invalid_argument("EXCEPTION: 3 Arguments got passed (by the machine!) to FST");
 }
 
 void VM::MACHINE::DELEGATES::FEN::run(VM::MACHINE::Stackframe &stackframe) {
-
+    throw std::invalid_argument("EXCEPTION: 0 Arguments got passed (by the machine!) to FEN");
 }
 
 void VM::MACHINE::DELEGATES::FEN::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a) {
@@ -1424,13 +1424,13 @@ void VM::MACHINE::DELEGATES::FEN::run(VM::MACHINE::Stackframe &stackframe, VM::T
 
 void VM::MACHINE::DELEGATES::FEN::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
                                       VM::TYPES::Reference &b) {
-
+    throw std::invalid_argument("EXCEPTION: 2 Arguments got passed (by the machine!) to FEN");
 }
 
 void
 VM::MACHINE::DELEGATES::FEN::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
                                  VM::TYPES::Reference &c) {
-
+    throw std::invalid_argument("EXCEPTION: 3 Arguments got passed (by the machine!) to FEN");
 }
 
 void VM::MACHINE::DELEGATES::REFA::run(VM::MACHINE::Stackframe &stackframe) {
@@ -1645,40 +1645,153 @@ VM::MACHINE::DELEGATES::SET::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES:
 }
 
 void VM::MACHINE::DELEGATES::ASET::run(VM::MACHINE::Stackframe &stackframe) {
-
+    throw std::invalid_argument("EXCEPTION: 0 Arguments got passed (by the machine!) to ASET");
 }
 
 void VM::MACHINE::DELEGATES::ASET::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a) {
-
+    throw std::invalid_argument("EXCEPTION: 1 Argument got passed (by the machine!) to ASET");
 }
 
 void VM::MACHINE::DELEGATES::ASET::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
                                        VM::TYPES::Reference &b) {
-
+    throw std::invalid_argument("EXCEPTION: 2 Arguments got passed (by the machine!) to ASET");
 }
 
 void
 VM::MACHINE::DELEGATES::ASET::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
                                   VM::TYPES::Reference &c) {
-
+    TYPES::Reference* refToSet;
+    std::uint64_t indexToSet = *(reinterpret_cast<std::uint64_t*>(c.m_content.get()));
+    std::uint32_t idToSet = *(reinterpret_cast<std::uint32_t*>(a.m_content.get()));
+    bool foundId = false;
+    for(auto & m_reference : stackframe.m_references){
+        if(m_reference.m_id == idToSet){
+            refToSet = &m_reference;
+            foundId = true;
+            break;
+        }
+    }
+    if(foundId){
+        if(indexToSet >= refToSet->m_size){
+            throw std::invalid_argument("EXCEPTION: Array index out of bounds (ASET).");
+        }
+        bool boolVal = true;
+        std::uint8_t byteVal = 1;
+        std::uint32_t uintVal = 1;
+        std::uint64_t uLongVal = 1;
+        std::uint32_t intVal = 1;
+        std::uint64_t longVal = 1;
+        long double ldVal = 1.0;
+        switch(refToSet->m_type) {
+            case 0x0:
+                if(*(reinterpret_cast<std::uint64_t *>(b.m_content.get())) != 1l){
+                    boolVal = false;
+                }
+                std::memcpy(((bool*)(refToSet->m_content.get()))+indexToSet, &boolVal, BOOL_LENGTH);
+                break;
+            case 0x1:
+                byteVal = *(reinterpret_cast<std::uint8_t *>(b.m_content.get()));
+                std::memcpy(((std::uint8_t*)(refToSet->m_content.get()))+indexToSet, &byteVal, BYTE_LENGTH);
+                break;
+            case 0x2:
+                uintVal = *(reinterpret_cast<std::uint32_t *>(b.m_content.get()));
+                std::memcpy(((std::uint32_t*)(refToSet->m_content.get()))+indexToSet, &uintVal, INT_LENGTH);
+                break;
+            case 0x3:
+                uLongVal = *(reinterpret_cast<std::uint64_t *>(b.m_content.get()));
+                std::memcpy(((std::uint64_t*)(refToSet->m_content.get()))+indexToSet, &uLongVal, LONG_LENGTH);
+                break;
+            case 0x4:
+                intVal = *(reinterpret_cast<std::int32_t *>(b.m_content.get()));
+                std::memcpy(((std::int32_t*)(refToSet->m_content.get()))+indexToSet, &intVal, INT_LENGTH);
+                break;
+            case 0x5:
+                longVal = *(reinterpret_cast<std::int64_t *>(b.m_content.get()));
+                std::memcpy(((std::int64_t*)(refToSet->m_content.get()))+indexToSet, &longVal, LONG_LENGTH);
+                break;
+            case 0x6:
+                ldVal = *(reinterpret_cast<long double *>(b.m_content.get()));
+                std::memcpy(((long double*)(refToSet->m_content.get()))+indexToSet, &ldVal, DEC_LENGTH);
+                break;
+            default:
+                throw std::invalid_argument("EXCEPTION: invalid Reference got passed (by the machine!) to ASET.");
+        }
+    }else{
+        throw std::invalid_argument("EXCEPTION: Invalid Reference got passed (by the machine!) to ASET");
+    }
 }
 
 void VM::MACHINE::DELEGATES::AGET::run(VM::MACHINE::Stackframe &stackframe) {
-
+    throw std::invalid_argument("EXCEPTION: 0 Arguments got passed (by the machine!) to AGET");
 }
 
 void VM::MACHINE::DELEGATES::AGET::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a) {
-
+    throw std::invalid_argument("EXCEPTION: 1 Argument got passed (by the machine!) to AGET");
 }
 
 void VM::MACHINE::DELEGATES::AGET::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
                                        VM::TYPES::Reference &b) {
-
+    throw std::invalid_argument("EXCEPTION: 2 Arguments got passed (by the machine!) to AGET");
 }
 
 void
 VM::MACHINE::DELEGATES::AGET::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
                                   VM::TYPES::Reference &c) {
+    TYPES::Reference* dst;
+    TYPES::Reference* src;
+    std::uint32_t
+            dstId = *(reinterpret_cast<std::uint32_t*>(a.m_content.get())),
+            srcId = *(reinterpret_cast<std::uint32_t*>(b.m_content.get()));
+
+    std::uint64_t srcIndex = *(reinterpret_cast<std::uint64_t*>(c.m_content.get()));
+    bool
+            foundDst = false,
+            foundSrc = false;
+    for(auto& ref : stackframe.m_references){
+        if(!foundDst && ref.m_id == dstId){
+            dst = &ref;
+            foundDst = true;
+        }
+        if(!foundSrc && ref.m_id == srcId){
+            src = &ref;
+            foundSrc = true;
+        }
+        if(foundSrc && foundDst){
+            break;
+        }
+    }
+    int typeSizes[7];
+    typeSizes[0] = BOOL_LENGTH;
+    typeSizes[1] = BYTE_LENGTH;
+    typeSizes[2] = INT_LENGTH;
+    typeSizes[3] = LONG_LENGTH;
+    typeSizes[4] = INT_LENGTH;
+    typeSizes[5] = LONG_LENGTH;
+    typeSizes[6] = DEC_LENGTH;
+    std::memcpy(dst->m_content.get(), src->m_content.get(), typeSizes[dst->m_type]);
+    switch(dst->m_type){
+        case 0:
+            std::memcpy(dst->m_content.get(), ((bool*)(src->m_content.get()))+srcIndex, typeSizes[dst->m_type]);
+            break;
+        case 1:
+            std::memcpy(dst->m_content.get(), ((std::uint8_t*)(src->m_content.get()))+srcIndex, typeSizes[dst->m_type]);
+            break;
+        case 2:
+            std::memcpy(dst->m_content.get(), ((std::uint32_t*)(src->m_content.get()))+srcIndex, typeSizes[dst->m_type]);
+            break;
+        case 3:
+            std::memcpy(dst->m_content.get(), ((std::uint64_t*)(src->m_content.get()))+srcIndex, typeSizes[dst->m_type]);
+            break;
+        case 4:
+            std::memcpy(dst->m_content.get(), ((std::int32_t*)(src->m_content.get()))+srcIndex, typeSizes[dst->m_type]);
+            break;
+        case 5:
+            std::memcpy(dst->m_content.get(), ((std::int64_t*)(src->m_content.get()))+srcIndex, typeSizes[dst->m_type]);
+            break;
+        case 6:
+            std::memcpy(dst->m_content.get(), ((long double*)(src->m_content.get()))+srcIndex, typeSizes[dst->m_type]);
+            break;
+    }
 
 }
 
@@ -1855,18 +1968,18 @@ void VM::MACHINE::DELEGATES::MAIN::run(VM::MACHINE::Stackframe &stackframe) {
 }
 
 void VM::MACHINE::DELEGATES::MAIN::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a) {
-
+    throw std::invalid_argument("EXCEPTION: 1 Argument got passed (by the machine!) to MAIN");
 }
 
 void VM::MACHINE::DELEGATES::MAIN::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
                                        VM::TYPES::Reference &b) {
-
+    throw std::invalid_argument("EXCEPTION: 2 Arguments got passed (by the machine!) to MAIN");
 }
 
 void
 VM::MACHINE::DELEGATES::MAIN::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
                                   VM::TYPES::Reference &c) {
-
+    throw std::invalid_argument("EXCEPTION: 3 Arguments got passed (by the machine!) to MAIN");
 }
 
 void VM::MACHINE::DELEGATES::MEND::run(VM::MACHINE::Stackframe &stackframe) {
@@ -1874,18 +1987,18 @@ void VM::MACHINE::DELEGATES::MEND::run(VM::MACHINE::Stackframe &stackframe) {
 }
 
 void VM::MACHINE::DELEGATES::MEND::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a) {
-
+    throw std::invalid_argument("EXCEPTION: 1 Argument got passed (by the machine!) to MEND");
 }
 
 void VM::MACHINE::DELEGATES::MEND::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
                                        VM::TYPES::Reference &b) {
-
+    throw std::invalid_argument("EXCEPTION: 2 Arguments got passed (by the machine!) to MEND");
 }
 
 void
 VM::MACHINE::DELEGATES::MEND::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
                                   VM::TYPES::Reference &c) {
-
+    throw std::invalid_argument("EXCEPTION: 3 Arguments got passed (by the machine!) to MEND");
 }
 
 void VM::MACHINE::DELEGATES::NOOP::run(VM::MACHINE::Stackframe &stackframe) {
@@ -1893,18 +2006,18 @@ void VM::MACHINE::DELEGATES::NOOP::run(VM::MACHINE::Stackframe &stackframe) {
 }
 
 void VM::MACHINE::DELEGATES::NOOP::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a) {
-
+    throw std::invalid_argument("EXCEPTION: 1 Argument got passed (by the machine!) to NOOP");
 }
 
 void VM::MACHINE::DELEGATES::NOOP::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
                                        VM::TYPES::Reference &b) {
-
+    throw std::invalid_argument("EXCEPTION: 2 Arguments got passed (by the machine!) to NOOP");
 }
 
 void
 VM::MACHINE::DELEGATES::NOOP::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
                                   VM::TYPES::Reference &c) {
-
+    throw std::invalid_argument("EXCEPTION: 3 Arguments got passed (by the machine!) to NOOP");
 }
 
 void VM::MACHINE::DELEGATES::RETG::run(VM::MACHINE::Stackframe &stackframe) {
