@@ -68,7 +68,7 @@ VM::READING::Command::Command(const std::vector<BYTE> &input) {
 VM::READING::Command::Command(const VM::READING::Command &input) {
     this->m_rawCommand = input.m_rawCommand;
     this->m_opCode = input.m_opCode;
-    this->m_commandInformation = input.m_commandInformation;
+    this->m_commandInformation = MISC::CommandInformation();
     this->m_args = input.m_args;
     this->m_argReferences = input.m_argReferences;
 }

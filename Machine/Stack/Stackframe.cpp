@@ -4,9 +4,11 @@
 
 #include "Stackframe.h"
 
+#include <utility>
+
 void VM::MACHINE::Stackframe::init(VM::MACHINE::Function function, VM::MACHINE::Executor *executor) {
     this->m_executor = executor;
-    this->m_function = function;
+    this->m_function = std::move(function);
     this->m_programCounter = 0;
 }
 

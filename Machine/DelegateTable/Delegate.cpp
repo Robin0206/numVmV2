@@ -1374,7 +1374,7 @@ void VM::MACHINE::DELEGATES::ARG::run(VM::MACHINE::Stackframe &stackframe, VM::T
     std::uint32_t dstId = *(reinterpret_cast<std::uint32_t*>(a.m_content.get()));
     std::uint32_t srcIndex = *(reinterpret_cast<std::uint32_t*>(b.m_content.get()));
     bool foundDst = false;
-    for(auto& ref : stackframe.m_arguments){
+    for(auto& ref : stackframe.m_references){
         if(ref.m_id == dstId){
             dst = &ref;
             foundDst = true;
@@ -1382,6 +1382,7 @@ void VM::MACHINE::DELEGATES::ARG::run(VM::MACHINE::Stackframe &stackframe, VM::T
     }
     if(foundDst){
         if(stackframe.m_arguments[srcIndex].m_type == dst->m_type) {
+            stackframe.m_arguments[srcIndex].m_id = dstId;
             *(dst) = TYPES::Reference(stackframe.m_arguments[srcIndex]);
         }else{
             throw std::invalid_argument("EXCEPTION: Source and destination have different types (ARG)");

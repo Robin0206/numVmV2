@@ -30,7 +30,7 @@ void VM::MACHINE::Executor::setMain(std::vector<VM::READING::Command> &rawProgra
     bool inMain = false;
     std::vector<VM::READING::Command> commands;
     for(auto& command : rawProgram){
-        if(command.m_opCode == 0x1E){
+        if(command.m_opCode == 0x20){
             break;
         }
         if(inMain){
@@ -56,7 +56,7 @@ void VM::MACHINE::Executor::init(std::vector<VM::READING::Command> &rawProgram) 
 
 void VM::MACHINE::Executor::run() {
     READING::Command currentCommand;
-    while(!m_stack.empty()){
+    while(!m_stack.empty() && m_stack[m_stack.size() - 1].m_programCounter < m_stack[m_stack.size() - 1].m_function.m_commands.size()){
         currentCommand = m_stack[m_stack.size() - 1].getCurrentCommand();
         switch(currentCommand.m_argReferences.size()){
             case 0:
