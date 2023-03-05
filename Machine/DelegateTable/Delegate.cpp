@@ -1303,11 +1303,14 @@ void VM::MACHINE::DELEGATES::CALL::run(VM::MACHINE::Stackframe &stackframe, VM::
     if(foundIndex){
         Stackframe frameToPass = Stackframe();
         frameToPass.init(stackframe.m_executor->m_functions[index],stackframe.m_executor);
+        for(auto& arg : stackframe.m_executor->m_argRegisters){
+            frameToPass.m_arguments.push_back(arg);
+        }
         stackframe.m_executor->m_stack.push_back(frameToPass);
+        stackframe.m_executor->m_argRegisters.clear();
     }else{
         throw std::invalid_argument("EXCEPTION: invalid id got passed (by the machine!) to CALL");
     }
-
 }
 
 void VM::MACHINE::DELEGATES::CALL::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
@@ -1322,41 +1325,74 @@ VM::MACHINE::DELEGATES::CALL::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES
 }
 
 void VM::MACHINE::DELEGATES::PARG::run(VM::MACHINE::Stackframe &stackframe) {
-
+    throw std::invalid_argument("EXCEPTION: 0 Arguments got passed (by the machine!) to PARG");
 }
 
 void VM::MACHINE::DELEGATES::PARG::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a) {
-
+    //search for the reference
+    TYPES::Reference* refToPush;
+    std::uint32_t refId = *(reinterpret_cast<std::uint32_t*>(a.m_content.get()));
+    bool foundRef = false;
+    for(auto& ref : stackframe.m_references){
+        if(ref.m_id == refId){
+            refToPush = &ref;
+            foundRef = true;
+        }
+    }
+    //push it to the argRegister
+    if(foundRef){
+        stackframe.m_executor->m_argRegisters.push_back(*(refToPush));
+    }else{
+        throw std::invalid_argument("EXCEPTION: invalid id got passed (by the machine!) to PARG");
+    }
 }
 
 void VM::MACHINE::DELEGATES::PARG::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
                                        VM::TYPES::Reference &b) {
-
+    throw std::invalid_argument("EXCEPTION: 2 Arguments got passed (by the machine!) to PARG");
 }
 
 void
 VM::MACHINE::DELEGATES::PARG::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
                                   VM::TYPES::Reference &c) {
-
+    throw std::invalid_argument("EXCEPTION: 3 Arguments got passed (by the machine!) to PARG");
 }
 
 void VM::MACHINE::DELEGATES::ARG::run(VM::MACHINE::Stackframe &stackframe) {
-
+    throw std::invalid_argument("EXCEPTION: 0 Arguments got passed (by the machine!) to ARG");
 }
 
 void VM::MACHINE::DELEGATES::ARG::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a) {
-
+    throw std::invalid_argument("EXCEPTION: 1 Argument got passed (by the machine!) to ARG");
 }
 
 void VM::MACHINE::DELEGATES::ARG::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
                                       VM::TYPES::Reference &b) {
-
+    TYPES::Reference* dst;
+    std::uint32_t dstId = *(reinterpret_cast<std::uint32_t*>(a.m_content.get()));
+    std::uint32_t srcIndex = *(reinterpret_cast<std::uint32_t*>(b.m_content.get()));
+    bool foundDst = false;
+    for(auto& ref : stackframe.m_arguments){
+        if(ref.m_id == dstId){
+            dst = &ref;
+            foundDst = true;
+        }
+    }
+    if(foundDst){
+        if(stackframe.m_arguments[srcIndex].m_type == dst->m_type) {
+            *(dst) = TYPES::Reference(stackframe.m_arguments[srcIndex]);
+        }else{
+            throw std::invalid_argument("EXCEPTION: Source and destination have different types (ARG)");
+        }
+    }else{
+        throw std::invalid_argument("EXCEPTION: invalid Argument got passed (by the machine!) to ARG(argument not found)");
+    }
 }
 
 void
 VM::MACHINE::DELEGATES::ARG::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
                                  VM::TYPES::Reference &c) {
-
+    throw std::invalid_argument("EXCEPTION: 3 Arguments got passed (by the machine!) to ARG");
 }
 
 void VM::MACHINE::DELEGATES::FST::run(VM::MACHINE::Stackframe &stackframe) {

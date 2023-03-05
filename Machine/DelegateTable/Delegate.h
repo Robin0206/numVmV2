@@ -10,7 +10,7 @@
 
 namespace VM::MACHINE::DELEGATES {
     struct Delegate {
-        Executor *m_executor;
+
 
         void setExecutor(Executor *executor);
 
