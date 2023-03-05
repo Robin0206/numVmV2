@@ -1487,7 +1487,7 @@ void
 VM::MACHINE::DELEGATES::REFA::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
                                   VM::TYPES::Reference &c) {
     std::uint32_t id = *(reinterpret_cast<std::uint32_t*>(a.m_content.get()));
-    std::uint32_t type = *(reinterpret_cast<std::uint32_t*>(b.m_content.get()));
+    std::uint8_t type = *(reinterpret_cast<std::uint8_t*>(b.m_content.get()));
     std::uint64_t size = *(reinterpret_cast<std::uint64_t*>(c.m_content.get()));
 
     bool boolVal = true;
@@ -1675,7 +1675,7 @@ VM::MACHINE::DELEGATES::ASET::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES
         }
     }
     if(foundId){
-        if(indexToSet >= refToSet->m_size){
+        if(indexToSet <= refToSet->m_size){
             throw std::invalid_argument("EXCEPTION: Array index out of bounds (ASET).");
         }
         bool boolVal = true;

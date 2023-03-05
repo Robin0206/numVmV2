@@ -12,7 +12,7 @@ void VM::MACHINE::Stackframe::init(VM::MACHINE::Function function, VM::MACHINE::
     this->m_programCounter = 0;
 }
 
-VM::READING::Command VM::MACHINE::Stackframe::getCurrentCommand() {
+VM::READING::Command& VM::MACHINE::Stackframe::getCurrentCommand() {
     m_programCounter++;
     return m_function.m_commands[m_programCounter - 1];
 }

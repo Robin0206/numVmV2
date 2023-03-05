@@ -35,14 +35,14 @@ namespace VM::MISC {
             //system/functions
             m_names[21] = "PRINT";//-
             m_names[22] = "RET";//-
-            m_names[23] = "CALL";//-untested
-            m_names[24] = "PARG";//-untested
+            m_names[23] = "CALL";//
+            m_names[24] = "PARG";//
             m_names[25] = "BRANCH";//-
             m_names[26] = "LABEL";//-
             m_names[27] = "REFF";//-
             m_names[28] = "FST";//-
             m_names[29] = "FEN";//-
-            m_names[30] = "ARG";//-untested
+            m_names[30] = "ARG";//
             m_names[31] = "MAIN";//-
             m_names[32] = "MEND";//-
             m_names[33] = "RETG";//-
