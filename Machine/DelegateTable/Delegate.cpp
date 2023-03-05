@@ -1302,12 +1302,14 @@ void VM::MACHINE::DELEGATES::CALL::run(VM::MACHINE::Stackframe &stackframe, VM::
     }
     if(foundIndex){
         Stackframe frameToPass = Stackframe();
-        frameToPass.init(stackframe.m_executor->m_functions[index],stackframe.m_executor);
-        for(auto& arg : stackframe.m_executor->m_argRegisters){
+        frameToPass.init(stackframe.m_function.m_machine->m_functions[index],stackframe.m_function.m_machine);
+        for(auto& arg : stackframe.m_function.m_machine->m_argRegisters){
             frameToPass.m_arguments.push_back(arg);
         }
         stackframe.m_executor->m_stack.push_back(frameToPass);
-        stackframe.m_executor->m_argRegisters.clear();
+        if(!stackframe.m_function.m_machine->m_argRegisters.empty()){
+            stackframe.m_function.m_machine->m_argRegisters.clear();
+        }
     }else{
         throw std::invalid_argument("EXCEPTION: invalid id got passed (by the machine!) to CALL");
     }

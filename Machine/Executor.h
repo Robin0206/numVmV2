@@ -23,7 +23,7 @@ namespace VM::MACHINE{
         std::vector<VM::MACHINE::Stackframe> m_stack;
         std::vector<VM::MACHINE::Function> m_functions;
         VM::MACHINE::Stackframe m_main;
-        std::vector<VM::TYPES::Reference> m_argRegisters;
+        std::vector<VM::TYPES::Reference> m_argRegisters{};
         VM::TYPES::Reference m_returnRegister;
         void fillFunctions(std::vector<VM::READING::Command>& rawProgram);
         void setMain(std::vector<VM::READING::Command>& rawProgram);
