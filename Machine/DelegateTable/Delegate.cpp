@@ -121,6 +121,7 @@ void VM::MACHINE::DELEGATES::SUB::run(VM::MACHINE::Stackframe &stackframe, VM::T
 void
 VM::MACHINE::DELEGATES::SUB::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
                                  VM::TYPES::Reference &c) {
+
 //see if types match
     if(a.m_type == b.m_type && b.m_type == c.m_type) {
         //set the references
@@ -155,12 +156,12 @@ VM::MACHINE::DELEGATES::SUB::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES:
             }
         }
         bool boolValue;
-        std::uint8_t byteValue;
-        std::uint32_t uIntValue;
-        std::uint64_t uLongValue;
-        std::int32_t intValue;
-        std::int64_t longValue;
-        long double ldValue;
+        std::uint8_t byteValue = 1;
+        std::uint32_t uIntValue = 1;;
+        std::uint64_t uLongValue = 1;;
+        std::int32_t intValue = 1;;
+        std::int64_t longValue = 1;;
+        long double ldValue = 1.0l;
 
         if (allSet) {
             //add and write them
@@ -868,31 +869,31 @@ VM::MACHINE::DELEGATES::EQ::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::
     bool result;
     switch (opA->m_type) {
         case 0x0://bool
-            result = 0==(std::memcmp(opA->m_content.get(), opB->m_content.get(), BOOL_LENGTH));
+            result = (*((bool*)opA->m_content.get()))==(*((bool*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x1://byte
-            result = 0==(std::memcmp(opA->m_content.get(), opB->m_content.get(), BYTE_LENGTH));
+            result = (*((std::uint8_t*)opA->m_content.get()))==(*((std::uint8_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x2://uint32
-            result = 0==(std::memcmp(opA->m_content.get(), opB->m_content.get(), INT_LENGTH));
+            result = (*((std::uint32_t*)opA->m_content.get()))==(*((std::uint32_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x3://uint64
-            result = 0==(std::memcmp(opA->m_content.get(), opB->m_content.get(), LONG_LENGTH));
+            result = (*((std::uint64_t*)opA->m_content.get()))==(*((std::uint64_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x4://int32
-            result = 0==(std::memcmp(opA->m_content.get(), opB->m_content.get(), INT_LENGTH));
+            result = (*((std::int32_t*)opA->m_content.get()))==(*((std::int32_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x5://int64
-            result = 0==(std::memcmp(opA->m_content.get(), opB->m_content.get(), LONG_LENGTH));
+            result = (*((std::int64_t*)opA->m_content.get()))==(*((std::int64_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x6://long double
-            result = 0==(std::memcmp(opA->m_content.get(), opB->m_content.get(), DEC_LENGTH));
+            result = (*((long double*)opA->m_content.get()))==(*((long double*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         default:
@@ -957,31 +958,31 @@ VM::MACHINE::DELEGATES::LSS::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES:
     bool result;
     switch (opA->m_type) {
         case 0x0://bool
-            result = 0>(std::memcmp(opA->m_content.get(), opB->m_content.get(), BOOL_LENGTH));
+            result = (*((bool*)opA->m_content.get()))<(*((bool*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x1://byte
-            result = 0>(std::memcmp(opA->m_content.get(), opB->m_content.get(), BYTE_LENGTH));
+            result = (*((std::uint8_t*)opA->m_content.get()))<(*((std::uint8_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x2://uint32
-            result = 0>(std::memcmp(opA->m_content.get(), opB->m_content.get(), INT_LENGTH));
+            result = (*((std::uint32_t*)opA->m_content.get()))<(*((std::uint32_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x3://uint64
-            result = 0>(std::memcmp(opA->m_content.get(), opB->m_content.get(), LONG_LENGTH));
+            result = (*((std::uint64_t*)opA->m_content.get()))<(*((std::uint64_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x4://int32
-            result = 0>(std::memcmp(opA->m_content.get(), opB->m_content.get(), INT_LENGTH));
+            result = (*((std::int32_t*)opA->m_content.get()))<(*((std::int32_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x5://int64
-            result = 0>(std::memcmp(opA->m_content.get(), opB->m_content.get(), LONG_LENGTH));
+            result = (*((std::int64_t*)opA->m_content.get()))<(*((std::int64_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x6://long double
-            result = 0>(std::memcmp(opA->m_content.get(), opB->m_content.get(), DEC_LENGTH));
+            result = (*((long double*)opA->m_content.get()))<(*((long double*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         default:
@@ -1046,31 +1047,31 @@ VM::MACHINE::DELEGATES::GRT::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES:
     bool result;
     switch (opA->m_type) {
         case 0x0://bool
-            result = 0<(std::memcmp(opA->m_content.get(), opB->m_content.get(), BOOL_LENGTH));
+            result = (*((bool*)opA->m_content.get()))>(*((bool*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x1://byte
-            result = 0<(std::memcmp(opA->m_content.get(), opB->m_content.get(), BYTE_LENGTH));
+            result = (*((std::uint8_t*)opA->m_content.get()))>(*((std::uint8_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x2://uint32
-            result = 0<(std::memcmp(opA->m_content.get(), opB->m_content.get(), INT_LENGTH));
+            result = (*((std::uint32_t*)opA->m_content.get()))>(*((std::uint32_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x3://uint64
-            result = 0<(std::memcmp(opA->m_content.get(), opB->m_content.get(), LONG_LENGTH));
+            result = (*((std::uint64_t*)opA->m_content.get()))>(*((std::uint64_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x4://int32
-            result = 0<(std::memcmp(opA->m_content.get(), opB->m_content.get(), INT_LENGTH));
+            result = (*((std::int32_t*)opA->m_content.get()))>(*((std::int32_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x5://int64
-            result = 0<(std::memcmp(opA->m_content.get(), opB->m_content.get(), LONG_LENGTH));
+            result = (*((std::int64_t*)opA->m_content.get()))>(*((std::int64_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x6://long double
-            result = 0<(std::memcmp(opA->m_content.get(), opB->m_content.get(), DEC_LENGTH));
+            result = (*((long double*)opA->m_content.get()))>(*((long double*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         default:
@@ -1135,31 +1136,31 @@ VM::MACHINE::DELEGATES::LSE::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES:
     bool result;
     switch (opA->m_type) {
         case 0x0://bool
-            result = 0>=(std::memcmp(opA->m_content.get(), opB->m_content.get(), BOOL_LENGTH));
+            result =  (*((bool*)opA->m_content.get()))<=(*((bool*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x1://byte
-            result = 0>=(std::memcmp(opA->m_content.get(), opB->m_content.get(), BYTE_LENGTH));
+            result = (*((std::uint8_t*)opA->m_content.get()))<=(*((std::uint8_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x2://uint32
-            result = 0>=(std::memcmp(opA->m_content.get(), opB->m_content.get(), INT_LENGTH));
+            result = (*((std::uint32_t*)opA->m_content.get()))<=(*((std::uint32_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x3://uint64
-            result = 0>=(std::memcmp(opA->m_content.get(), opB->m_content.get(), LONG_LENGTH));
+            result = (*((std::uint64_t*)opA->m_content.get()))<=(*((std::uint64_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x4://int32
-            result = 0>=(std::memcmp(opA->m_content.get(), opB->m_content.get(), INT_LENGTH));
+            result = (*((std::int32_t*)opA->m_content.get()))<=(*((std::int32_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x5://int64
-            result = 0>=(std::memcmp(opA->m_content.get(), opB->m_content.get(), LONG_LENGTH));
+            result = (*((std::int64_t*)opA->m_content.get()))<=(*((std::int64_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x6://long double
-            result = 0>=(std::memcmp(opA->m_content.get(), opB->m_content.get(), DEC_LENGTH));
+            result = (*((long double*)opA->m_content.get()))<=(*((long double*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         default:
@@ -1224,31 +1225,31 @@ VM::MACHINE::DELEGATES::GRE::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES:
     bool result;
     switch (opA->m_type) {
         case 0x0://bool
-            result = 0<=(std::memcmp(opA->m_content.get(), opB->m_content.get(), BOOL_LENGTH));
+            result = (*((bool*)opA->m_content.get()))>=(*((bool*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x1://byte
-            result = 0<=(std::memcmp(opA->m_content.get(), opB->m_content.get(), BYTE_LENGTH));
+            result = (*((std::uint8_t*)opA->m_content.get()))>=(*((std::uint8_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x2://uint32
-            result = 0<=(std::memcmp(opA->m_content.get(), opB->m_content.get(), INT_LENGTH));
+            result = (*((std::uint32_t*)opA->m_content.get()))>=(*((std::uint32_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x3://uint64
-            result = 0<=(std::memcmp(opA->m_content.get(), opB->m_content.get(), LONG_LENGTH));
+            result = (*((std::uint64_t*)opA->m_content.get()))>=(*((std::uint64_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x4://int32
-            result = 0<=(std::memcmp(opA->m_content.get(), opB->m_content.get(), INT_LENGTH));
+            result = (*((std::int32_t*)opA->m_content.get()))>=(*((std::int32_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x5://int64
-            result = 0<=(std::memcmp(opA->m_content.get(), opB->m_content.get(), LONG_LENGTH));
+            result = (*((std::int64_t*)opA->m_content.get()))>=(*((std::int64_t*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         case 0x6://long double
-            result = 0<=(std::memcmp(opA->m_content.get(), opB->m_content.get(), DEC_LENGTH));
+            result = (*((long double*)opA->m_content.get()))>=(*((long double*)opB->m_content.get()));
             std::memcpy(dst->m_content.get(), &result, BOOL_LENGTH);
             break;
         default:
@@ -1378,12 +1379,15 @@ void VM::MACHINE::DELEGATES::ARG::run(VM::MACHINE::Stackframe &stackframe, VM::T
         if(ref.m_id == dstId){
             dst = &ref;
             foundDst = true;
+            break;
         }
     }
     if(foundDst){
         if(stackframe.m_arguments[srcIndex].m_type == dst->m_type) {
-            stackframe.m_arguments[srcIndex].m_id = dstId;
+            std::uint8_t type = dst->m_type;
             *(dst) = TYPES::Reference(stackframe.m_arguments[srcIndex]);
+            (*(dst)).m_id = dstId;
+            (*(dst)).m_type = type;
         }else{
             throw std::invalid_argument("EXCEPTION: Source and destination have different types (ARG)");
         }
@@ -1453,8 +1457,8 @@ void VM::MACHINE::DELEGATES::REFA::run(VM::MACHINE::Stackframe &stackframe, VM::
     std::uint8_t byteVal = 1;
     std::uint32_t uintVal = 1;
     std::uint64_t uLongVal = 1;
-    std::uint32_t intVal = 1;
-    std::uint64_t longVal = 1;
+    std::int32_t intVal = 1;
+    std::int64_t longVal = 1;
     long double ldVal = 1.0;
     switch(type){
         case 0x0:
