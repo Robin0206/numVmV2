@@ -1385,8 +1385,9 @@ void VM::MACHINE::DELEGATES::ARG::run(VM::MACHINE::Stackframe &stackframe, VM::T
     if(foundDst){
         if(stackframe.m_arguments[srcIndex].m_type == dst->m_type) {
             std::uint8_t type = dst->m_type;
+            std::uint8_t id = dst->m_id;
             *(dst) = TYPES::Reference(stackframe.m_arguments[srcIndex]);
-            (*(dst)).m_id = dstId;
+            (*(dst)).m_id = id;
             (*(dst)).m_type = type;
         }else{
             throw std::invalid_argument("EXCEPTION: Source and destination have different types (ARG)");
@@ -1954,10 +1955,10 @@ void VM::MACHINE::DELEGATES::LABEL::run(VM::MACHINE::Stackframe &stackframe) {
 }
 
 void VM::MACHINE::DELEGATES::LABEL::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a) {
-    std::pair<std::uint32_t, std::uint32_t> result;
+    /*std::pair<std::uint32_t, std::uint32_t> result;
     result.first = *(reinterpret_cast<std::uint32_t*>(a.m_content.get()));
     result.second = stackframe.m_programCounter;
-    stackframe.m_labels.push_back(result);
+    stackframe.m_labels.push_back(result);*/
 }
 
 void VM::MACHINE::DELEGATES::LABEL::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a,
