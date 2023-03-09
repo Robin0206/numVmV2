@@ -8,6 +8,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <memory>
+#include <vector>
 
 namespace VM::TYPES{
     class Reference {
@@ -15,6 +16,7 @@ namespace VM::TYPES{
         std::uint32_t m_id;
         std::uint64_t m_size;
         std::shared_ptr<void> m_content;
+        std::vector<std::shared_ptr<void>> m_arrContent;
 
         std::uint8_t m_type;
         explicit Reference();

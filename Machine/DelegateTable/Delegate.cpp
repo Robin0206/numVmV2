@@ -1668,64 +1668,43 @@ void VM::MACHINE::DELEGATES::ASET::run(VM::MACHINE::Stackframe &stackframe, VM::
 void
 VM::MACHINE::DELEGATES::ASET::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES::Reference &a, VM::TYPES::Reference &b,
                                   VM::TYPES::Reference &c) {
-    TYPES::Reference* refToSet;
-    std::uint64_t indexToSet = *(reinterpret_cast<std::uint64_t*>(c.m_content.get()));
-    std::uint32_t idToSet = *(reinterpret_cast<std::uint32_t*>(a.m_content.get()));
-    bool foundId = false;
-    for(auto & m_reference : stackframe.m_references){
-        if(m_reference.m_id == idToSet){
-            refToSet = &m_reference;
-            foundId = true;
+    TYPES::Reference* dst;
+    TYPES::Reference* src;
+    std::uint64_t index = *(reinterpret_cast<std::uint64_t*>(c.m_content.get()));
+    std::uint32_t dstId = *(reinterpret_cast<std::uint32_t*>(a.m_content.get()));
+    std::uint32_t srcId = *(reinterpret_cast<std::uint32_t*>(b.m_content.get()));
+    bool foundDst = false, foundSrc = false, allSet = false;
+
+    for(auto& ref : stackframe.m_references){
+        if(ref.m_id == dstId){
+            dst = &ref;
+            foundDst = true;
+        }
+        if(ref.m_id == srcId){
+            src = &ref;
+            foundDst = true;
+        }
+        if(foundDst && foundSrc){
+            allSet = true;
             break;
         }
     }
-    if(foundId){
-        if(indexToSet <= refToSet->m_size){
-            throw std::invalid_argument("EXCEPTION: Array index out of bounds (ASET).");
-        }
-        bool boolVal = true;
-        std::uint8_t byteVal = 1;
-        std::uint32_t uintVal = 1;
-        std::uint64_t uLongVal = 1;
-        std::uint32_t intVal = 1;
-        std::uint64_t longVal = 1;
-        long double ldVal = 1.0;
-        switch(refToSet->m_type) {
-            case 0x0:
-                if(*(reinterpret_cast<std::uint64_t *>(b.m_content.get())) != 1l){
-                    boolVal = false;
-                }
-                std::memcpy(((bool*)(refToSet->m_content.get()))+indexToSet, &boolVal, BOOL_LENGTH);
-                break;
-            case 0x1:
-                byteVal = *(reinterpret_cast<std::uint8_t *>(b.m_content.get()));
-                std::memcpy(((std::uint8_t*)(refToSet->m_content.get()))+indexToSet, &byteVal, BYTE_LENGTH);
-                break;
-            case 0x2:
-                uintVal = *(reinterpret_cast<std::uint32_t *>(b.m_content.get()));
-                std::memcpy(((std::uint32_t*)(refToSet->m_content.get()))+indexToSet, &uintVal, INT_LENGTH);
-                break;
-            case 0x3:
-                uLongVal = *(reinterpret_cast<std::uint64_t *>(b.m_content.get()));
-                std::memcpy(((std::uint64_t*)(refToSet->m_content.get()))+indexToSet, &uLongVal, LONG_LENGTH);
-                break;
-            case 0x4:
-                intVal = *(reinterpret_cast<std::int32_t *>(b.m_content.get()));
-                std::memcpy(((std::int32_t*)(refToSet->m_content.get()))+indexToSet, &intVal, INT_LENGTH);
-                break;
-            case 0x5:
-                longVal = *(reinterpret_cast<std::int64_t *>(b.m_content.get()));
-                std::memcpy(((std::int64_t*)(refToSet->m_content.get()))+indexToSet, &longVal, LONG_LENGTH);
-                break;
-            case 0x6:
-                ldVal = *(reinterpret_cast<long double *>(b.m_content.get()));
-                std::memcpy(((long double*)(refToSet->m_content.get()))+indexToSet, &ldVal, DEC_LENGTH);
-                break;
-            default:
-                throw std::invalid_argument("EXCEPTION: invalid Reference got passed (by the machine!) to ASET.");
+    int sizes[7];
+    sizes[0] = BOOL_LENGTH;
+    sizes[1] = BYTE_LENGTH;
+    sizes[2] = INT_LENGTH;
+    sizes[3] = LONG_LENGTH;
+    sizes[4] = INT_LENGTH;
+    sizes[5] = LONG_LENGTH;
+    sizes[6] = DEC_LENGTH;
+    if(allSet){
+        if(dst->m_type == src->m_type){
+            std::memcpy(dst->m_arrContent[index].get(), src->m_content.get(), sizeof(sizes[src->m_type]));
+        }else{
+            throw std::invalid_argument("EXCEPTION: invalid Arguments got passed (by the machine!) to ASET (types dont match)");
         }
     }else{
-        throw std::invalid_argument("EXCEPTION: Invalid Reference got passed (by the machine!) to ASET");
+        throw std::invalid_argument("EXCEPTION: invalid Arguments got passed (by the machine!) to ASET (at least one not found)");
     }
 }
 
