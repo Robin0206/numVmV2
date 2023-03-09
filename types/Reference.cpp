@@ -23,7 +23,9 @@ VM::TYPES::Reference::Reference(bool value, std::uint64_t size, std::uint32_t id
         this->m_content = std::make_shared<void *>(malloc(sizeof(bool)));
         std::memcpy(this->m_content.get(), &value, sizeof(bool));
     }else{
-        this->m_arrContent.resize(size);
+        for(int i = 0; i < size; i++){
+            this->m_arrContent.push_back(std::make_shared<void*>(malloc(sizeof(bool))));
+        }
     }
 }
 
@@ -35,7 +37,9 @@ VM::TYPES::Reference::Reference(std::uint8_t value, std::uint64_t size, std::uin
         this->m_content = std::make_shared<void *>(malloc(sizeof(std::uint8_t)));
         std::memcpy(this->m_content.get(), &value, sizeof(std::uint8_t));
     }else{
-        this->m_arrContent.resize(size);
+        for(int i = 0; i < size; i++){
+            this->m_arrContent.push_back(std::make_shared<void*>(malloc(sizeof(std::uint8_t))));
+        }
     }
 }
 VM::TYPES::Reference::Reference(std::uint32_t value, std::uint64_t size, std::uint32_t id) {
@@ -46,7 +50,9 @@ VM::TYPES::Reference::Reference(std::uint32_t value, std::uint64_t size, std::ui
         this->m_content = std::make_shared<void *>(malloc(sizeof(std::uint32_t)));
         std::memcpy(this->m_content.get(), &value, sizeof(std::uint32_t));
     }else{
-        this->m_arrContent.resize(size);
+        for(int i = 0; i < size; i++){
+            this->m_arrContent.push_back(std::make_shared<void*>(malloc(sizeof(std::uint32_t))));
+        }
     }
 }
 VM::TYPES::Reference::Reference(std::uint64_t value, std::uint64_t size, std::uint32_t id) {
@@ -57,7 +63,9 @@ VM::TYPES::Reference::Reference(std::uint64_t value, std::uint64_t size, std::ui
         this->m_content = std::make_shared<void *>(malloc(sizeof(std::uint64_t)));
         std::memcpy(this->m_content.get(), &value, sizeof(std::uint64_t));
     }else{
-        this->m_arrContent.resize(size);
+        for(int i = 0; i < size; i++){
+            this->m_arrContent.push_back(std::make_shared<void*>(malloc(sizeof(std::uint64_t))));
+        }
     }
 }
 
@@ -69,7 +77,9 @@ VM::TYPES::Reference::Reference(std::int32_t value, std::uint64_t size, std::uin
         this->m_content = std::make_shared<void *>(malloc(sizeof(std::int32_t)));
         std::memcpy(this->m_content.get(), &value, sizeof(std::int32_t));
     }else{
-        this->m_arrContent.resize(size);
+        for(int i = 0; i < size; i++){
+            this->m_arrContent.push_back(std::make_shared<void*>(malloc(sizeof(std::int32_t))));
+        }
     }
 }
 VM::TYPES::Reference::Reference(std::int64_t value, std::uint64_t size, std::uint32_t id) {
@@ -80,7 +90,9 @@ VM::TYPES::Reference::Reference(std::int64_t value, std::uint64_t size, std::uin
         this->m_content = std::make_shared<void *>(malloc(sizeof(std::int64_t)));
         std::memcpy(this->m_content.get(), &value, sizeof(std::int64_t));
     }else{
-        this->m_arrContent.resize(size);
+        for(int i = 0; i < size; i++){
+            this->m_arrContent.push_back(std::make_shared<void*>(malloc(sizeof(std::int64_t))));
+        }
     }
 }
 
@@ -92,7 +104,9 @@ VM::TYPES::Reference::Reference(long double value, std::uint64_t size, std::uint
         this->m_content = std::make_shared<void *>(malloc(sizeof(long double)));
         std::memcpy(this->m_content.get(), &value, sizeof(long double));
     }else{
-        this->m_arrContent.resize(size);
+        for(int i = 0; i < size; i++){
+            this->m_arrContent.push_back(std::make_shared<void*>(malloc(sizeof(long double))));
+        }
     }
 }
 

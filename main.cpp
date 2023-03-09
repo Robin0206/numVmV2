@@ -42,10 +42,10 @@ int main() {
     reader.run();
     std::vector<BYTE> testProgram = reader.getRawProgram();
     VM::READING::Lexer lexer = VM::READING::Lexer(testProgram);
-    //std::cout << "Code:" << "\n";
-    //lexer.printCommands();
+    std::cout << "Code:" << "\n";
+    lexer.printCommands();
     VM::MACHINE::Executor executor = VM::MACHINE::Executor();
     executor.init(lexer.getCommands());
-    //std::cout << "\nResult: \n";
+    std::cout << "\nResult: \n";
     executor.run();
 }

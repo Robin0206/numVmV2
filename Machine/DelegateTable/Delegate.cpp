@@ -1498,9 +1498,9 @@ VM::MACHINE::DELEGATES::REFA::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES
     bool boolVal = true;
     std::uint8_t byteVal = 1;
     std::uint32_t uintVal = 1;
-    std::uint64_t uLongVal = 1;
-    std::uint32_t intVal = 1;
-    std::uint64_t longVal = 1;
+    std::uint64_t uLongVal = 1l;
+    std::int32_t intVal = 1;
+    std::int64_t longVal = 1l;
     long double ldVal = 1.0;
     switch(type){
         case 0x0:
@@ -1682,7 +1682,7 @@ VM::MACHINE::DELEGATES::ASET::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES
         }
         if(ref.m_id == srcId){
             src = &ref;
-            foundDst = true;
+            foundSrc = true;
         }
         if(foundDst && foundSrc){
             allSet = true;
@@ -1699,7 +1699,7 @@ VM::MACHINE::DELEGATES::ASET::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES
     sizes[6] = DEC_LENGTH;
     if(allSet){
         if(dst->m_type == src->m_type){
-            std::memcpy(dst->m_arrContent[index].get(), src->m_content.get(), sizeof(sizes[src->m_type]));
+            std::memcpy(dst->m_arrContent[index].get(), src->m_content.get(), sizes[src->m_type]);
         }else{
             throw std::invalid_argument("EXCEPTION: invalid Arguments got passed (by the machine!) to ASET (types dont match)");
         }
