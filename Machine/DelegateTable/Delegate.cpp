@@ -1733,7 +1733,8 @@ VM::MACHINE::DELEGATES::AGET::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES
     std::uint64_t srcIndex = *(reinterpret_cast<std::uint64_t*>(c.m_content.get()));
     bool
             foundDst = false,
-            foundSrc = false;
+            foundSrc = false,
+            allSet = false;
     for(auto& ref : stackframe.m_references){
         if(!foundDst && ref.m_id == dstId){
             dst = &ref;
@@ -1744,6 +1745,7 @@ VM::MACHINE::DELEGATES::AGET::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES
             foundSrc = true;
         }
         if(foundSrc && foundDst){
+            allSet = true;
             break;
         }
     }
@@ -1755,29 +1757,14 @@ VM::MACHINE::DELEGATES::AGET::run(VM::MACHINE::Stackframe &stackframe, VM::TYPES
     typeSizes[4] = INT_LENGTH;
     typeSizes[5] = LONG_LENGTH;
     typeSizes[6] = DEC_LENGTH;
-    std::memcpy(dst->m_content.get(), src->m_content.get(), typeSizes[dst->m_type]);
-    switch(dst->m_type){
-        case 0:
-            std::memcpy(dst->m_content.get(), ((bool*)(src->m_content.get()))+srcIndex, typeSizes[dst->m_type]);
-            break;
-        case 1:
-            std::memcpy(dst->m_content.get(), ((std::uint8_t*)(src->m_content.get()))+srcIndex, typeSizes[dst->m_type]);
-            break;
-        case 2:
-            std::memcpy(dst->m_content.get(), ((std::uint32_t*)(src->m_content.get()))+srcIndex, typeSizes[dst->m_type]);
-            break;
-        case 3:
-            std::memcpy(dst->m_content.get(), ((std::uint64_t*)(src->m_content.get()))+srcIndex, typeSizes[dst->m_type]);
-            break;
-        case 4:
-            std::memcpy(dst->m_content.get(), ((std::int32_t*)(src->m_content.get()))+srcIndex, typeSizes[dst->m_type]);
-            break;
-        case 5:
-            std::memcpy(dst->m_content.get(), ((std::int64_t*)(src->m_content.get()))+srcIndex, typeSizes[dst->m_type]);
-            break;
-        case 6:
-            std::memcpy(dst->m_content.get(), ((long double*)(src->m_content.get()))+srcIndex, typeSizes[dst->m_type]);
-            break;
+    if(allSet){
+        if(dst->m_type == src->m_type){
+            std::memcpy(dst->m_content.get(), src->m_arrContent[srcIndex].get(), typeSizes[dst->m_type]);
+        }else{
+            throw std::invalid_argument("EXCEPTION: invalid Arguments got passed (by the machine!) to AGET (types dont match)");
+        }
+    }else{
+        throw std::invalid_argument("EXCEPTION: invalid Arguments got passed (by the machine!) to AGET (at least one not found)");
     }
 
 }
